@@ -105,7 +105,7 @@ void cadastro(FILE* arq){
         pokemon_i.tipo2[strcspn(pokemon_i.tipo2, "\n")] = '\0';
 
         if(strcmp(pokemon_i.tipo2, '\n') == 0){
-            pokemon_i.tipo2[11] = "NULL";
+            pokemon_i.tipo2[11] = "Nenhum";
         }
 
         //inserção do HP total do Pokémon
@@ -190,12 +190,9 @@ void cadastro(FILE* arq){
     }
 
 }
-
 int main(){
 
-    FILE* arq;
-    abrir_arquivo(arq);
-    cadastro(arq);
+    printf("Teste");
 
     return 0;
 }
