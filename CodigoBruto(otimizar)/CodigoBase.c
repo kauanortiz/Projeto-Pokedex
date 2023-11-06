@@ -91,7 +91,7 @@ void listar_todos(Pokemon pokedex[], int tamanho){
         printf("\n");
 
         if(strcmp(busca_tipo, "Inseto") == 0){
-            strcpy("Bug",busca_tipo);
+            strcpy(busca_tipo, "Bug");
         }
 
         if(strcmp(busca_tipo, "Dragão") == 0){
