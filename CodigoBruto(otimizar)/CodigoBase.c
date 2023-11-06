@@ -29,41 +29,133 @@ void ler_nomes(char pokemon[]){
 
 }
 
-void listar_todos(Pokemon pokedex){
+void listar_todos(Pokemon pokedex[], int tamanho){
 
-            printf("Número: %d.\n",pokedex.numero);
-            printf("Nome: %s.\n",pokedex.nome);
-            printf("Tipo 1: %s.\n",pokedex.tipo1);
-            printf("Tipo 2: %s.\n",pokedex.tipo2);
-            printf("Total: %d.\n",pokedex.total);
-            printf("Hp: %d.\n",pokedex.hp);
-            printf("Ataque: %d.\n",pokedex.attack);
-            printf("Defesa: %d.\n",pokedex.defense);
-            printf("Ataque especial: %d.\n",pokedex.sp_attack);
-            printf("Defesa especial: %d.\n",pokedex.sp_defense);
-            printf("Velocidade: %d.\n",pokedex.speed);
-            printf("Geração: %d°.\n",pokedex.geracao);
-            printf("Lendário (0 = não e 1 = sim): %d.\n",pokedex.lendario);
-            printf("Cor: %s.\n",pokedex.cor);
-            printf("Altura (metros): %f.\n",pokedex.altura);
-            printf("Peso (kg): %f.\n",pokedex.peso);
-            printf("Taxa de captura: %d.\n",pokedex.catch_rate);
+    int opcao;
+    int geracao_busca; //para caso opção 1 seja escolhida
+    char busca_tipo[16]; //para caso opção 2 seja escolhida
+
+    printf("Filtros para listagem de Pokémon: ");
+    printf("\n1 - Por geração.\n2 - Por tipo.\n");
+    printf("Insira o filtro desejado: ");
+    scanf("%d",&opcao);
+    printf("\n");
+
+    switch(opcao){
+
+        case 1:
+
+        printf("Insira qual geração deseja exibir: ");
+        scanf("%d",&geracao_busca);
+
+        while(geracao_busca <= 0){
+            printf("Valor inválido. Insira um valor adequado: ");
+            scanf("%d",&geracao_busca);
             printf("\n");
+        }
+
+        for(int i = 0; i < tamanho; i++){
+
+            if(pokedex[i].geracao == geracao_busca){
+
+                printf("Número: %d.\n",pokedex[i].numero);
+                printf("Nome: %s.\n",pokedex[i].nome);
+                printf("Tipo 1: %s.\n",pokedex[i].tipo1);
+                printf("Tipo 2: %s.\n",pokedex[i].tipo2);
+                printf("Total: %d.\n",pokedex[i].total);
+                printf("Hp: %d.\n",pokedex[i].hp);
+                printf("Ataque: %d.\n",pokedex[i].attack);
+                printf("Defesa: %d.\n",pokedex[i].defense);
+                printf("Ataque especial: %d.\n",pokedex[i].sp_attack);
+                printf("Defesa especial: %d.\n",pokedex[i].sp_defense);
+                printf("Velocidade: %d.\n",pokedex[i].speed);
+                printf("Geração: %d°.\n",pokedex[i].geracao);
+                printf("Lendário (0 = não e 1 = sim): %d.\n",pokedex[i].lendario);
+                printf("Cor: %s.\n",pokedex[i].cor);
+                printf("Altura (metros): %f.\n",pokedex[i].altura);
+                printf("Peso (kg): %f.\n",pokedex[i].peso);
+                printf("Taxa de captura: %d.\n",pokedex[i].catch_rate);
+                printf("\n");
+            }
+        }
+
+        break;
+
+        case 2:
+
+        printf("Tipos de Pokémon: ");
+        printf("\nAço\nBug(inseto)\nDragon(dragão)\nElectric(elétrico)\nFada\nFire(fogo)\nGelo\nGhost(fantasma)\n");
+        printf("Lutador\nNormal\nPedra\nPlanta\nPsychic(psiquíco)\nSombrio\nTerra\nVenenoso\nVoador\nWater(água)\n");
+        printf("Insira o tipo de Pokémon que deseja listar: ");
+        ler_nomes(busca_tipo);
+        printf("\n");
+
+        if(strcmp(busca_tipo, "Inseto") == 0){
+            strcpy("Bug",busca_tipo);
+        }
+
+        if(strcmp(busca_tipo, "Dragão") == 0){
+            strcpy("Dragon",busca_tipo);
+        }
+
+        if(strcmp(busca_tipo, "Elétrico") == 0){
+            strcpy("Electric",busca_tipo);
+        }
+
+        if(strcmp(busca_tipo, "Fogo") == 0){
+            strcpy("Fire",busca_tipo);
+        }
+
+        if(strcmp(busca_tipo, "Fantasma") == 0){
+            strcpy("Ghost",busca_tipo);
+        }
+
+        if(strcmp(busca_tipo, "Psiquíco") == 0){
+            strcpy("Psychic",busca_tipo);
+        }
+        if(strcmp(busca_tipo, "Água") == 0){
+            strcpy("Water",busca_tipo);
+        }
+
+        for(int i = 0; i < tamanho; i++){
+
+            if(strcmp(pokedex[i].tipo1, busca_tipo) == 0 || strcmp(pokedex[i].tipo2, busca_tipo) == 0 ){
+
+                printf("Número: %d.\n",pokedex[i].numero);
+                printf("Nome: %s.\n",pokedex[i].nome);
+                printf("Tipo 1: %s.\n",pokedex[i].tipo1);
+                printf("Tipo 2: %s.\n",pokedex[i].tipo2);
+                printf("Total: %d.\n",pokedex[i].total);
+                printf("Hp: %d.\n",pokedex[i].hp);
+                printf("Ataque: %d.\n",pokedex[i].attack);
+                printf("Defesa: %d.\n",pokedex[i].defense);
+                printf("Ataque especial: %d.\n",pokedex[i].sp_attack);
+                printf("Defesa especial: %d.\n",pokedex[i].sp_defense);
+                printf("Velocidade: %d.\n",pokedex[i].speed);
+                printf("Geração: %d°.\n",pokedex[i].geracao);
+                printf("Lendário (0 = não e 1 = sim): %d.\n",pokedex[i].lendario);
+                printf("Cor: %s.\n",pokedex[i].cor);
+                printf("Altura (metros): %f.\n",pokedex[i].altura);
+                printf("Peso (kg): %f.\n",pokedex[i].peso);
+                printf("Taxa de captura: %d.\n",pokedex[i].catch_rate);
+                printf("\n");
+            }
+        }
+    }
 
 }
 
-void buscar_pokemon(Pokemon pokedex[], int tamanho, int indice){
+void buscar_pokemon(Pokemon pokedex[], int tamanho, char busca[]){
 
     int achou;
 
-    printf("Insira o número do Pokémon que deseja buscar na Pokédex: ");
-    scanf("%d",&indice);
-    printf("\n");
+    printf("Insira o nome do Pokémon que deseja buscar na Pokédex: ");
+    ler_nomes(busca);
 
 
     for(int i = 1; i < tamanho; i++){
 
-        if(indice == pokedex[i].numero){
+        if(strcmp(busca, pokedex[i].nome) == 0){
 
             printf("Número: %d.\n",pokedex[i].numero);
             printf("Nome: %s.\n",pokedex[i].nome);
@@ -283,7 +375,8 @@ int main(){
 
     int opcao; //switch
     int tamanho = 722; //tamanho original de Pokémon na Pokédex
-    int indice; //indice usado nos tópicos 3, 4 e 5 para que as buscas sejam realizadas
+    char busca[16]; //utilizado para realizar a busca no tópico 3
+    int indice; //indice usado nos tópicos 4 e 5 para que as buscas sejam realizadas
 
     Pokemon* pokedex = (Pokemon*)malloc(tamanho * sizeof(Pokemon));
 
@@ -497,18 +590,14 @@ int main(){
 
         case 2: //listar todos os Pokémon
 
-        for(int i = 1; i < tamanho; i++){
-
-            listar_todos(pokedex[i]);
-            
-        }
+            listar_todos(pokedex, tamanho);            
 
         break;
 
 
         case 3: //buscar um Pokémon na Pokédex
 
-        buscar_pokemon(pokedex, tamanho, indice);
+        buscar_pokemon(pokedex, tamanho, busca);
 
         break;
 
