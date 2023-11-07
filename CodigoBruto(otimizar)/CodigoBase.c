@@ -34,6 +34,7 @@ void listar_todos(Pokemon pokedex[], int tamanho){
     int opcao;
     int geracao_busca; //para caso opção 1 seja escolhida
     char busca_tipo[16]; //para caso opção 2 seja escolhida
+    int achou = 0; //para efetivar o else da opção 2, caso a busca seja mal sucedida
 
     printf("Filtros para listagem de Pokémon: ");
     printf("\n1 - Por geração.\n2 - Por tipo.\n");
@@ -84,9 +85,9 @@ void listar_todos(Pokemon pokedex[], int tamanho){
         case 2:
 
         printf("Tipos de Pokémon: ");
-        printf("\nAço\nBug(inseto)\nDragon(dragão)\nElectric(elétrico)\nFada\nFire(fogo)\nGelo\nGhost(fantasma)\n");
-        printf("Lutador\nNormal\nPedra\nPlanta\nPsychic(psiquíco)\nSombrio\nTerra\nVenenoso\nVoador\nWater(água)\n");
-        printf("Insira o tipo de Pokémon que deseja listar: ");
+        printf("\nAço\nAgua\nDragao\nEletrico\nFada\nFogo\nGelo\nFantasma\nInseto");
+        printf("\nLutador\nNormal\nPedra\nPlanta\nPsiquico\nSombrio\nTerra\nVenenoso\nVoador\n");
+        printf("\nInsira o tipo de Pokémon que deseja listar: ");
         ler_nomes(busca_tipo);
         printf("\n");
 
@@ -94,32 +95,34 @@ void listar_todos(Pokemon pokedex[], int tamanho){
             strcpy(busca_tipo, "Bug");
         }
 
-        if(strcmp(busca_tipo, "Dragão") == 0){
-            strcpy("Dragon",busca_tipo);
+        if(strcmp(busca_tipo, "Dragao") == 0){
+            strcpy(busca_tipo, "Dragon");
         }
 
-        if(strcmp(busca_tipo, "Elétrico") == 0){
-            strcpy("Electric",busca_tipo);
+        if(strcmp(busca_tipo, "Eletrico") == 0){
+            strcpy(busca_tipo, "Electric");
         }
 
         if(strcmp(busca_tipo, "Fogo") == 0){
-            strcpy("Fire",busca_tipo);
+            strcpy(busca_tipo, "Fire");
         }
 
         if(strcmp(busca_tipo, "Fantasma") == 0){
-            strcpy("Ghost",busca_tipo);
+            strcpy(busca_tipo, "Ghost");
         }
 
-        if(strcmp(busca_tipo, "Psiquíco") == 0){
-            strcpy("Psychic",busca_tipo);
+        if(strcmp(busca_tipo, "Psiquico") == 0){
+            strcpy(busca_tipo, "Psychic");
         }
-        if(strcmp(busca_tipo, "Água") == 0){
-            strcpy("Water",busca_tipo);
+        if(strcmp(busca_tipo, "Agua") == 0){
+            strcpy(busca_tipo, "Water");
         }
 
         for(int i = 0; i < tamanho; i++){
 
             if(strcmp(pokedex[i].tipo1, busca_tipo) == 0 || strcmp(pokedex[i].tipo2, busca_tipo) == 0 ){
+
+                achou++;
 
                 printf("Número: %d.\n",pokedex[i].numero);
                 printf("Nome: %s.\n",pokedex[i].nome);
@@ -141,6 +144,13 @@ void listar_todos(Pokemon pokedex[], int tamanho){
                 printf("\n");
             }
         }
+
+        if(achou == 0){
+            printf("Tipo não encontrado.\n");
+            printf("\n");
+        }
+
+        break;
     }
 
 }
