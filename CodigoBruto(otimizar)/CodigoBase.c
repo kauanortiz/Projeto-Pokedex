@@ -15,18 +15,180 @@ typedef struct{
 
 } Pokemon;
 
-typedef struct{
+typedef struct{ 
     
-    Pokemon Time[5];
+    Pokemon Time[6]; 
 
 } Mochila;
 
-void ler_nomes(char pokemon[]){
+void ler_nomes(char pokemon[], int size){
 
     setbuf(stdin, NULL);
-    fgets(pokemon, 15, stdin);
+    fgets(pokemon, size, stdin);
     pokemon[strcspn(pokemon, "\n")] = '\0';
 
+}
+
+void inserir_novo(Pokemon pokedex[], int tamanho){
+
+        //inserção do nome
+        printf("Insira o nome do Pokémon desejado para inserção: ");
+        ler_nomes(pokedex[tamanho - 1].nome, 15);
+        printf("\n");
+
+        //inserção do número
+        printf("Insira o número desse pokémon ");
+        printf("(Obs: Necessita ser maior que %d pois é o número do último da lista): ",tamanho - 2);
+        scanf("%d",&pokedex[tamanho - 1].numero);
+        printf("\n");
+
+        while(pokedex[tamanho - 1].numero <= tamanho  - 2){
+            printf("Valor inválido. Insira um novo valor: ");
+            scanf("%d",&pokedex[tamanho - 1].numero);
+            printf("\n");
+        }
+
+        //inserção da geração
+        printf("Insira a geração desse Pokémon: ");
+        scanf("%d",&pokedex[tamanho - 1].geracao);
+
+        while(pokedex[tamanho - 1].geracao <= 0){
+            printf("Valor inválido. Insira um novo valor: ");
+            scanf("%d",&pokedex[tamanho - 1].geracao);
+            printf("\n");
+        }
+
+        //inserção da cor
+        printf("Insira a cor desse Pokémon: ");
+        ler_nomes(pokedex[tamanho - 1].cor, 11);
+        printf("\n");
+
+        //inserção do tipo primário
+        printf("Insira o tipo primário desse Pokémon: ");
+        ler_nomes(pokedex[tamanho - 1].tipo1, 11);
+
+        //inserção do tipo secundário
+        printf("Insira o tipo secundário desse Pokémon, se não houver, pressione ""Enter"": ");
+        ler_nomes(pokedex[tamanho - 1].tipo2, 11);
+        printf("\n");
+
+        if(strcmp(pokedex[tamanho - 1].tipo2, "\n") == 0){
+            strcpy(pokedex[tamanho - 1].tipo2, "NULL");
+        }
+
+        //inserção do valor total
+        printf("Insira o valor total desse Pokémon: ");
+        scanf("%d",&pokedex[tamanho - 1].total);
+        printf("\n");
+
+        while(pokedex[tamanho - 1].total <= 0){
+            printf("Valor inválido. Insira um valor adequado: ");
+            scanf("%d",&pokedex[tamanho - 1].total);
+            printf("\n");
+        }
+
+        //inserção do HP total do Pokémon
+        printf("Insira o HP total desse Pokémon: ");
+        scanf("%d",&pokedex[tamanho - 1].hp);
+        printf("\n");
+
+        while(pokedex[tamanho - 1].hp <= 0){
+            printf("HP inválido. Insira um valor adequado: ");
+            scanf("%d",&pokedex[tamanho - 1].hp);
+            printf("\n");
+        }
+
+        //inserção de stats
+        printf("Insira seu ataque e defesa respectivamente: ");
+        printf("\nAtaque: ");
+        scanf("%d",&pokedex[tamanho - 1].attack);
+
+        while(pokedex[tamanho - 1].attack <= 0){
+            printf("Ataque inválido. Insira um valor adequado: ");
+            scanf("%d",&pokedex[tamanho - 1].attack);
+        }
+
+        printf("Defesa: ");
+        scanf("%d",&pokedex[tamanho - 1].defense);
+        printf("\n");
+
+        while(pokedex[tamanho - 1].defense <= 0){
+            printf("Defesa inválida. Insira um valor adequado: ");
+            scanf("%d",&pokedex[tamanho - 1].defense);
+            printf("\n");
+        }
+
+        printf("Insira seu ataque e defesa especial respectivamente: ");
+        printf("\nAtaque Esp.: ");
+        scanf("%d",&pokedex[tamanho - 1].sp_attack);
+
+        while(pokedex[tamanho - 1].sp_attack <= 0){
+            printf("Ataque Esp. inválido. Insira um valor adequado: ");
+            scanf("%d",&pokedex[tamanho - 1].sp_attack);
+        }
+
+        printf("Defesa Esp.: ");
+        scanf("%d",&pokedex[tamanho - 1].sp_defense);
+        printf("\n");
+
+        while(pokedex[tamanho - 1].sp_defense <= 0){
+            printf("Defesa Esp. inválida. Insira um valor adequado: ");
+            scanf("%d",&pokedex[tamanho - 1].sp_defense);
+            printf("\n");
+        }
+
+        printf("Por fim, insira sua velocidade: ");
+        scanf("%d",&pokedex[tamanho - 1].speed);
+        printf("\n");
+
+        while(pokedex[tamanho - 1].speed <= 0){
+            printf("Velocidade inválida. Insira um valor adequado: ");
+            scanf("%d",&pokedex[tamanho - 1].speed);
+            printf("\n");
+        }
+
+        //lendário ou não?
+        printf("Esse Pokémon é lendário? Para ""Sim"", insira 1, e para ""Não"", insira 0: ");
+        scanf("%d",&pokedex[tamanho - 1].lendario);
+        printf("\n");
+
+        while(pokedex[tamanho - 1].lendario != 0 && pokedex[tamanho - 1].lendario != 1){
+            printf("Insira um valor igual a 0 ou 1.");
+            scanf("%d",&pokedex[tamanho - 1].lendario);
+            printf("\n");
+        }
+
+        //inserção altura e peso
+        printf("Insira a altura e peso do Pokémon respectivamente: ");
+        printf("\nAltura: ");
+        scanf("%f",&pokedex[tamanho - 1].altura);
+
+        while(pokedex[tamanho - 1].altura <= 0.0){
+            printf("Altura inválida. Insira um valor adequado: ");
+            scanf("%f",&pokedex[tamanho - 1].altura);
+            printf("\n");
+        }
+
+        printf("Peso: ");
+        scanf("%f",&pokedex[tamanho - 1].peso);
+        printf("\n");
+
+        while(pokedex[tamanho - 1].peso <= 0.0){
+            printf("Peso inválido. Insira um valor adequado: ");
+            scanf("%f",&pokedex[tamanho - 1].peso);
+            printf("\n");
+        }
+
+        printf("Insira a taxa de captura desse Pokémon: ");
+        scanf("%d", &pokedex[tamanho - 1].catch_rate);
+        printf("\n");
+
+        while(pokedex[tamanho - 1].catch_rate <= 0){
+            printf("Altura inválida. Insira um valor adequado: ");
+            scanf("%d",&pokedex[tamanho - 1].catch_rate);
+            printf("\n");
+
+        }
 }
 
 void listar_todos(Pokemon pokedex[], int tamanho){
@@ -88,7 +250,7 @@ void listar_todos(Pokemon pokedex[], int tamanho){
         printf("\nAço\nAgua\nDragao\nEletrico\nFada\nFogo\nGelo\nFantasma\nInseto");
         printf("\nLutador\nNormal\nPedra\nPlanta\nPsiquico\nSombrio\nTerra\nVenenoso\nVoador\n");
         printf("\nInsira o tipo de Pokémon que deseja listar: ");
-        ler_nomes(busca_tipo);
+        ler_nomes(busca_tipo, 15);
         printf("\n");
 
         if(strcmp(busca_tipo, "Inseto") == 0){
@@ -160,7 +322,7 @@ void buscar_pokemon(Pokemon pokedex[], int tamanho, char busca[]){
     int achou;
 
     printf("Insira o nome do Pokémon que deseja buscar na Pokédex: ");
-    ler_nomes(busca);
+    ler_nomes(busca, 15);
 
 
     for(int i = 1; i < tamanho; i++){
@@ -197,13 +359,19 @@ void buscar_pokemon(Pokemon pokedex[], int tamanho, char busca[]){
         }
 }
 
-void alterar_pokemon(Pokemon pokedex[], int tamanho, int indice){
+void alterar_pokemon(Pokemon pokedex[], int tamanho){
 
+    int indice;
     int achou;
 
         printf("Digite o número do Pokémon que deseja alterar: ");
         scanf("%d",&indice);
         printf("\n");
+
+        while(indice <= 0 || indice > (tamanho - 1)){
+            printf("Valor inválido. Insira um valor válido.\n");
+            scanf("%d",&indice);
+        }
 
         for(int i = 1; i < tamanho; i++){
 
@@ -213,7 +381,7 @@ void alterar_pokemon(Pokemon pokedex[], int tamanho, int indice){
 
                 //alteração do nome
                 printf("Qual o novo nome desse Pokémon? ");
-                ler_nomes(pokedex[i].nome);
+                ler_nomes(pokedex[i].nome, 15);
 
                 //alteração do número
                 printf("Insira o novo número desse Pokémon ");
@@ -240,16 +408,16 @@ void alterar_pokemon(Pokemon pokedex[], int tamanho, int indice){
 
                 //alteração da cor
                 printf("Insira a nova cor desse Pokémon: ");
-                ler_nomes(pokedex[i].cor);
+                ler_nomes(pokedex[i].cor, 11);
                 printf("\n");
 
                 //alteração do tipo primário
                 printf("Insira o novo tipo primário desse Pokémon: ");
-                ler_nomes(pokedex[i].tipo1);
+                ler_nomes(pokedex[i].tipo1, 11);
 
                 //alteração do tipo secundário
                 printf("Insira o novo tipo secundário desse Pokémon, se não houver, pressione ""Enter"": ");
-                ler_nomes(pokedex[i].tipo2);
+                ler_nomes(pokedex[i].tipo2, 11);
                 printf("\n");
 
                 if(strcmp(pokedex[i].tipo2, "\n") == 0){
@@ -377,258 +545,18 @@ void alterar_pokemon(Pokemon pokedex[], int tamanho, int indice){
 
 }
 
+void excluir_pokemon(Pokemon pokedex[], int tamanho){
 
-/*Deverá permitir cadastrar
-(inserir/listar/pesquisar/alterar/excluir) os Pokémons disponíveis para serem capturados.
-Essa relação deve aumentar e diminuir dinamicamente.*/
-int main(){
+    int indice;
 
-    int opcao; //switch
-    int tamanho = 722; //tamanho original de Pokémon na Pokédex
-    char busca[16]; //utilizado para realizar a busca no tópico 3
-    int indice; //indice usado nos tópicos 4 e 5 para que as buscas sejam realizadas
+    printf("Insira o número do Pokémon que deseja excluir: ");
+    scanf("%d",&indice);
 
-    Pokemon* pokedex = (Pokemon*)malloc(tamanho * sizeof(Pokemon));
-
-    if(pokedex == NULL){
-        printf("Erro: Memória insuficiente!\n");
-        exit(1);
-    }
-
-    FILE* arq = fopen("pokedex.csv", "r");
-
-    if(arq == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-
-    fseek(arq, 174, SEEK_SET);
-
-    for(int i = 1; i < tamanho; i++){
-
-        fscanf(arq,"%d ,%[^ ]%*[ ],%[^ ]%*[ ],%[^ ]%*[ ], %d , %d , %d , %d , %d , %d , %d , %d , %d ,%[^ ]%*[ ], %f , %f , %d ",
-        &pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
-         &pokedex[i].total, &pokedex[i].hp, &pokedex[i].attack, &pokedex[i].defense,
-         &pokedex[i].sp_attack, &pokedex[i].sp_defense, &pokedex[i].speed, &pokedex[i].geracao,
-         &pokedex[i].lendario, pokedex[i].cor, &pokedex[i].altura, &pokedex[i].peso,
-         &pokedex[i].catch_rate);
-    }
-
-    do{
-
-    printf("Menu opções:\n");
-    printf("1 - Inserir.\n2 - Listar.\n3 - Pesquisar.\n4 - Alterar.\n5 - Excluir.\n6 - Sair.\n");
-    printf("\n");
-    printf("Insira sua opção: ");
-    scanf("%d",&opcao);
-    printf("\n");
-
-    if(opcao < 1 || opcao > 6){
-        printf("\nOpção inválida. Insira novamente sua opção: ");
-        printf("\n");
-        scanf("%d",&opcao);
-    }
-
-    switch(opcao){
-
-        case 1: //adicionar novo Pokémon
-
-        tamanho++;
-        pokedex = realloc(pokedex, tamanho * sizeof(Pokemon));
-        
-        //inserção do nome
-        printf("Insira o nome do Pokémon desejado para inserção: ");
-        ler_nomes(pokedex[tamanho - 1].nome);
-        printf("\n");
-
-        //inserção do número
-        printf("Insira o número desse pokémon ");
-        printf("(Obs: Necessita ser maior que %d pois é o número do último da lista): ",tamanho - 2);
-        scanf("%d",&pokedex[tamanho - 1].numero);
-        printf("\n");
-
-        while(pokedex[tamanho - 1].numero <= tamanho  - 2){
-            printf("Valor inválido. Insira um novo valor: ");
-            scanf("%d",&pokedex[tamanho - 1].numero);
-            printf("\n");
-        }
-
-        //inserção da geração
-        printf("Insira a geração desse Pokémon: ");
-        scanf("%d",&pokedex[tamanho - 1].geracao);
-
-        while(pokedex[tamanho - 1].geracao <= 0){
-            printf("Valor inválido. Insira um novo valor: ");
-            scanf("%d",&pokedex[tamanho - 1].geracao);
-            printf("\n");
-        }
-
-        //inserção da cor
-        printf("Insira a cor desse Pokémon: ");
-        ler_nomes(pokedex[tamanho - 1].cor);
-        printf("\n");
-
-        //inserção do tipo primário
-        printf("Insira o tipo primário desse Pokémon: ");
-        ler_nomes(pokedex[tamanho - 1].tipo1);
-
-        //inserção do tipo secundário
-        printf("Insira o tipo secundário desse Pokémon, se não houver, pressione ""Enter"": ");
-        ler_nomes(pokedex[tamanho - 1].tipo2);
-        printf("\n");
-
-        if(strcmp(pokedex[tamanho - 1].tipo2, "\n") == 0){
-            strcpy(pokedex[tamanho - 1].tipo2, "NULL");
-        }
-
-        //inserção do valor total
-        printf("Insira o valor total desse Pokémon: ");
-        scanf("%d",&pokedex[tamanho - 1].total);
-        printf("\n");
-
-        while(pokedex[tamanho - 1].total <= 0){
-            printf("Valor inválido. Insira um valor adequado: ");
-            scanf("%d",&pokedex[tamanho - 1].total);
-            printf("\n");
-        }
-
-        //inserção do HP total do Pokémon
-        printf("Insira o HP total desse Pokémon: ");
-        scanf("%d",&pokedex[tamanho - 1].hp);
-        printf("\n");
-
-        while(pokedex[tamanho - 1].hp <= 0){
-            printf("HP inválido. Insira um valor adequado: ");
-            scanf("%d",&pokedex[tamanho - 1].hp);
-            printf("\n");
-        }
-
-        //inserção de stats
-        printf("Insira seu ataque e defesa respectivamente: ");
-        printf("\nAtaque: ");
-        scanf("%d",&pokedex[tamanho - 1].attack);
-
-        while(pokedex[tamanho - 1].attack <= 0){
-            printf("Ataque inválido. Insira um valor adequado: ");
-            scanf("%d",&pokedex[tamanho - 1].attack);
-        }
-
-        printf("Defesa: ");
-        scanf("%d",&pokedex[tamanho - 1].defense);
-        printf("\n");
-
-        while(pokedex[tamanho - 1].defense <= 0){
-            printf("Defesa inválida. Insira um valor adequado: ");
-            scanf("%d",&pokedex[tamanho - 1].defense);
-            printf("\n");
-        }
-
-        printf("Insira seu ataque e defesa especial respectivamente: ");
-        printf("\nAtaque Esp.: ");
-        scanf("%d",&pokedex[tamanho - 1].sp_attack);
-
-        while(pokedex[tamanho - 1].sp_attack <= 0){
-            printf("Ataque Esp. inválido. Insira um valor adequado: ");
-            scanf("%d",&pokedex[tamanho - 1].sp_attack);
-        }
-
-        printf("Defesa Esp.: ");
-        scanf("%d",&pokedex[tamanho - 1].sp_defense);
-        printf("\n");
-
-        while(pokedex[tamanho - 1].sp_defense <= 0){
-            printf("Defesa Esp. inválida. Insira um valor adequado: ");
-            scanf("%d",&pokedex[tamanho - 1].sp_defense);
-            printf("\n");
-        }
-
-        printf("Por fim, insira sua velocidade: ");
-        scanf("%d",&pokedex[tamanho - 1].speed);
-        printf("\n");
-
-        while(pokedex[tamanho - 1].speed <= 0){
-            printf("Velocidade inválida. Insira um valor adequado: ");
-            scanf("%d",&pokedex[tamanho - 1].speed);
-            printf("\n");
-        }
-
-        //lendário ou não?
-        printf("Esse Pokémon é lendário? Para ""Sim"", insira 1, e para ""Não"", insira 0: ");
-        scanf("%d",&pokedex[tamanho - 1].lendario);
-        printf("\n");
-
-        while(pokedex[tamanho - 1].lendario != 0 && pokedex[tamanho - 1].lendario != 1){
-            printf("Insira um valor igual a 0 ou 1.");
-            scanf("%d",&pokedex[tamanho - 1].lendario);
-            printf("\n");
-        }
-
-        //inserção altura e peso
-        printf("Insira a altura e peso do Pokémon respectivamente: ");
-        printf("\nAltura: ");
-        scanf("%f",&pokedex[tamanho - 1].altura);
-
-        while(pokedex[tamanho - 1].altura <= 0.0){
-            printf("Altura inválida. Insira um valor adequado: ");
-            scanf("%f",&pokedex[tamanho - 1].altura);
-            printf("\n");
-        }
-
-        printf("Peso: ");
-        scanf("%f",&pokedex[tamanho - 1].peso);
-        printf("\n");
-
-        while(pokedex[tamanho - 1].peso <= 0.0){
-            printf("Peso inválido. Insira um valor adequado: ");
-            scanf("%f",&pokedex[tamanho - 1].peso);
-            printf("\n");
-        }
-
-        printf("Insira a taxa de captura desse Pokémon: ");
-        scanf("%d", &pokedex[tamanho - 1].catch_rate);
-        printf("\n");
-
-        while(pokedex[tamanho - 1].catch_rate <= 0){
-            printf("Altura inválida. Insira um valor adequado: ");
-            scanf("%d",&pokedex[tamanho - 1].catch_rate);
-            printf("\n");
-
-        }
-
-        break;
-
-
-        case 2: //listar todos os Pokémon
-
-            listar_todos(pokedex, tamanho);            
-
-        break;
-
-
-        case 3: //buscar um Pokémon na Pokédex
-
-        buscar_pokemon(pokedex, tamanho, busca);
-
-        break;
-
-
-        case 4: //alterar dados de um Pokémon específico
-        
-        alterar_pokemon(pokedex, tamanho, indice);
-
-        break;
-
-
-        case 5: //exclusão de um Pokémon
-
-        printf("Insira o número do Pokémon que deseja excluir: ");
+    while(indice <= 0 || indice > (tamanho - 1)){
+        printf("Valor inválido. Insira um novo valor: ");
         scanf("%d",&indice);
-
-        if(indice <= 0 || indice > (tamanho - 1)){
-            printf("Valor inválido. Insira um novo valor: ");
-            scanf("%d",&indice);
-            printf("\n");
-        }
+        printf("\n");
+    }
 
         pokedex[indice].nome[0] = '\0';
         pokedex[indice].tipo1[0] = '\0';
@@ -650,11 +578,144 @@ int main(){
         printf("Pokémon excluído com sucesso!\n");
         printf("\n");
 
+}
+
+/*Deverá permitir cadastrar
+(inserir/listar/pesquisar/alterar/excluir) os Pokémons disponíveis para serem capturados.
+Essa relação deve aumentar e diminuir dinamicamente.*/
+int main(){
+
+    int opcao1, opcao2; //opções criadas para manuseamento dos switches
+    int tamanho = 722; //tamanho original de Pokémon na Pokédex
+    char busca[16]; //utilizado para realizar a busca no tópico 3
+    char nickname[31]; //armazena o nickname do jogador
+
+    Pokemon* pokedex = (Pokemon*)malloc(tamanho * sizeof(Pokemon));
+
+    if(pokedex == NULL){
+        printf("Erro: Memória insuficiente!\n");
+        exit(1);
+    }
+
+    FILE* arq = fopen("pokedex.csv", "r");
+    FILE* arq_do_jogador;
+
+    if(arq == NULL){
+        printf("Erro na abertura do arquivo.\n");
+        exit(1);
+    }
+
+    fseek(arq, 174, SEEK_SET);
+
+    for(int i = 1; i < tamanho; i++){
+
+        fscanf(arq,"%d ,%[^ ]%*[ ],%[^ ]%*[ ],%[^ ]%*[ ], %d , %d , %d , %d , %d , %d , %d , %d , %d ,%[^ ]%*[ ], %f , %f , %d ",
+        &pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
+         &pokedex[i].total, &pokedex[i].hp, &pokedex[i].attack, &pokedex[i].defense,
+         &pokedex[i].sp_attack, &pokedex[i].sp_defense, &pokedex[i].speed, &pokedex[i].geracao,
+         &pokedex[i].lendario, pokedex[i].cor, &pokedex[i].altura, &pokedex[i].peso,
+         &pokedex[i].catch_rate);
+    }
+
+    printf("Seja bem-vindo treinador Pokémon, você deseja iniciar uma nova jornada ou continuar de onde parou? ");
+    printf("\n1 - Novo jogo.\n2 - Carregar jogo.\n3 - Sair do jogo\n");
+    printf("Insira sua opção: ");
+    scanf("%d",&opcao1);
+
+    while(opcao1 < 1 || opcao1 > 3){
+        printf("Opção inválida. Insira novamente sua opção: ");
+        scanf("%d",&opcao1);
+    }
+
+    if(opcao1 == 1){
+
+        printf("Insira seu nickname: ");
+        ler_nomes(nickname, 30);
+        strcat(nickname, ".csv");
+        arq_do_jogador = fopen(nickname, "w");
+        printf("\n");
+
+    }else if(opcao1 == 2){
+
+        printf("Insira seu nickname: ");
+        ler_nomes(nickname, 30);
+        strcat(nickname, ".csv");
+        arq_do_jogador = fopen(nickname, "r");
+
+    }else{
+
+        exit(1);
+
+    }
+
+
+    do{
+
+    printf("Menu opções:\n");
+    printf("1 - Inserir.\n2 - Listar.\n3 - Pesquisar.\n4 - Alterar.\n5 - Excluir.\n6 - Sair. \n");
+    printf("\n");
+    printf("Insira sua opção: ");
+    scanf("%d",&opcao2);
+    printf("\n");
+
+    while(opcao2 < 1 || opcao2 > 6){
+        printf("\nOpção inválida. Insira novamente sua opção: ");
+        printf("\n");
+        scanf("%d",&opcao2);
+    }
+
+    switch(opcao2){
+
+        case 1: //adicionar novo Pokémon
+
+        tamanho++;
+        pokedex = realloc(pokedex, tamanho * sizeof(Pokemon));
+
+        inserir_novo(pokedex, tamanho);
+
+        break;
+
+
+        case 2: //listar todos os Pokémon
+
+            listar_todos(pokedex, tamanho);            
+
+        break;
+
+
+        case 3: //buscar um Pokémon na Pokédex
+
+        buscar_pokemon(pokedex, tamanho, busca);
+
+        break;
+
+
+        case 4: //alterar dados de um Pokémon específico
+        
+        alterar_pokemon(pokedex, tamanho);
+
+        break;
+
+
+        case 5: //exclusão de um Pokémon
+
+        excluir_pokemon(pokedex, tamanho);
+
         break;
 
     }
 
-    }while(opcao != 6);
+    }while(opcao2 != 6);
+
+    fprintf(arq_do_jogador, "numero ,nome           ,tipo1      ,tipo2      ,total ,hp  ,ataque ,defesa ,ataque_especial ,defesa_especial ,velocidade ,geracao ,lendario ,cor        ,altura_m ,peso_kg ,taxa_captura\n");
+    for(int i = 1; i < tamanho; i++){
+        fprintf(arq_do_jogador, "%7d,%15s,%11s,%11s,%6d,%4d,%7d,%7d,%16d,%16d,%11d,%8d,%9d,%11s, %7.2f , %6.2f ,%12d\n",
+        pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
+        pokedex[i].total, pokedex[i].hp, pokedex[i].attack, pokedex[i].defense,
+        pokedex[i].sp_attack, pokedex[i].sp_defense, pokedex[i].speed, pokedex[i].geracao,
+        pokedex[i].lendario, pokedex[i].cor, pokedex[i].altura, pokedex[i].peso,
+        pokedex[i].catch_rate);
+    }
 
     fclose(arq);
     free(pokedex);
