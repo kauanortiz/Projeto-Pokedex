@@ -1,5 +1,4 @@
 /*Teste p/ início do projeto*/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -597,25 +596,8 @@ int main(){
         exit(1);
     }
 
-    FILE* arq = fopen("pokedex.csv", "r");
+    FILE* arq;
     FILE* arq_do_jogador;
-
-    if(arq == NULL){
-        printf("Erro na abertura do arquivo.\n");
-        exit(1);
-    }
-
-    fseek(arq, 174, SEEK_SET);
-
-    for(int i = 1; i < tamanho; i++){
-
-        fscanf(arq,"%d ,%[^ ]%*[ ],%[^ ]%*[ ],%[^ ]%*[ ], %d , %d , %d , %d , %d , %d , %d , %d , %d ,%[^ ]%*[ ], %f , %f , %d ",
-        &pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
-         &pokedex[i].total, &pokedex[i].hp, &pokedex[i].attack, &pokedex[i].defense,
-         &pokedex[i].sp_attack, &pokedex[i].sp_defense, &pokedex[i].speed, &pokedex[i].geracao,
-         &pokedex[i].lendario, pokedex[i].cor, &pokedex[i].altura, &pokedex[i].peso,
-         &pokedex[i].catch_rate);
-    }
 
     printf("Seja bem-vindo treinador Pokémon, você deseja iniciar uma nova jornada ou continuar de onde parou? ");
     printf("\n1 - Novo jogo.\n2 - Carregar jogo.\n3 - Sair do jogo\n");
@@ -629,6 +611,25 @@ int main(){
 
     if(opcao1 == 1){
 
+        arq = fopen("pokedex.csv", "r");
+
+        if(arq == NULL){
+            printf("Erro na abertura do arquivo.\n");
+            exit(1);
+        }
+
+    fseek(arq, 174, SEEK_SET);
+
+    for(int i = 1; i < tamanho; i++){
+
+        fscanf(arq,"%d ,%[^ ]%*[ ],%[^ ]%*[ ],%[^ ]%*[ ], %d , %d , %d , %d , %d , %d , %d , %d , %d ,%[^ ]%*[ ], %f , %f , %d ",
+        &pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
+         &pokedex[i].total, &pokedex[i].hp, &pokedex[i].attack, &pokedex[i].defense,
+         &pokedex[i].sp_attack, &pokedex[i].sp_defense, &pokedex[i].speed, &pokedex[i].geracao,
+         &pokedex[i].lendario, pokedex[i].cor, &pokedex[i].altura, &pokedex[i].peso,
+         &pokedex[i].catch_rate);
+    }
+
         printf("Insira seu nickname: ");
         ler_nomes(nickname, 30);
         strcat(nickname, ".csv");
@@ -641,6 +642,26 @@ int main(){
         ler_nomes(nickname, 30);
         strcat(nickname, ".csv");
         arq_do_jogador = fopen(nickname, "r");
+
+        if(arq_do_jogador == NULL){
+            printf("Erro na abertura do arquivo.\n");
+            exit(1);
+        }
+        printf("\n");
+
+       
+
+        fseek(arq_do_jogador, 184, SEEK_SET);
+
+        for(int i = 1; i < tamanho; i++){
+
+            fscanf(arq_do_jogador,"%d,%*[ ]%[^,],%*[ ]%[^,],%*[ ]%[^,], %d, %d, %d, %d, %d, %d, %d, %d, %d,%*[ ]%[^,], %f , %f , %d",
+            &pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
+            &pokedex[i].total, &pokedex[i].hp, &pokedex[i].attack, &pokedex[i].defense,
+            &pokedex[i].sp_attack, &pokedex[i].sp_defense, &pokedex[i].speed, &pokedex[i].geracao,
+            &pokedex[i].lendario, pokedex[i].cor, &pokedex[i].altura, &pokedex[i].peso,
+            &pokedex[i].catch_rate);
+        }
 
     }else{
 
@@ -667,7 +688,6 @@ int main(){
     switch(opcao2){
 
         case 1: //adicionar novo Pokémon
-
         tamanho++;
         pokedex = realloc(pokedex, tamanho * sizeof(Pokemon));
 
@@ -678,7 +698,7 @@ int main(){
 
         case 2: //listar todos os Pokémon
 
-            listar_todos(pokedex, tamanho);            
+        listar_todos(pokedex, tamanho);            
 
         break;
 
@@ -707,17 +727,36 @@ int main(){
 
     }while(opcao2 != 6);
 
-    fprintf(arq_do_jogador, "numero ,nome           ,tipo1      ,tipo2      ,total ,hp  ,ataque ,defesa ,ataque_especial ,defesa_especial ,velocidade ,geracao ,lendario ,cor        ,altura_m ,peso_kg ,taxa_captura\n");
-    for(int i = 1; i < tamanho; i++){
-        fprintf(arq_do_jogador, "%7d,%15s,%11s,%11s,%6d,%4d,%7d,%7d,%16d,%16d,%11d,%8d,%9d,%11s, %7.2f , %6.2f ,%12d\n",
-        pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
-        pokedex[i].total, pokedex[i].hp, pokedex[i].attack, pokedex[i].defense,
-        pokedex[i].sp_attack, pokedex[i].sp_defense, pokedex[i].speed, pokedex[i].geracao,
-        pokedex[i].lendario, pokedex[i].cor, pokedex[i].altura, pokedex[i].peso,
-        pokedex[i].catch_rate);
-    }
+        if(opcao1 == 1){
+            
+            fprintf(arq_do_jogador, "numero ,nome           ,tipo1      ,tipo2      ,total ,hp  ,ataque ,defesa ,ataque_especial ,defesa_especial ,velocidade ,geracao ,lendario ,cor        ,altura_m ,peso_kg ,taxa_captura");
+            for(int i = 1; i < tamanho; i++){
+                fprintf(arq_do_jogador, "\n%7d,%15s,%11s,%11s,%6d,%4d,%7d,%7d,%16d,%16d,%11d,%8d,%9d,%11s, %7.2f , %6.2f ,%12d",
+                pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
+                pokedex[i].total, pokedex[i].hp, pokedex[i].attack, pokedex[i].defense,
+                pokedex[i].sp_attack, pokedex[i].sp_defense, pokedex[i].speed, pokedex[i].geracao,
+                pokedex[i].lendario, pokedex[i].cor, pokedex[i].altura, pokedex[i].peso,
+                pokedex[i].catch_rate);
+        }
+        }else if(opcao1 == 2){
+
+            fclose(arq_do_jogador);
+            arq_do_jogador = fopen(nickname, "w");
+
+            fprintf(arq_do_jogador, "numero ,nome           ,tipo1      ,tipo2      ,total ,hp  ,ataque ,defesa ,ataque_especial ,defesa_especial ,velocidade ,geracao ,lendario ,cor        ,altura_m ,peso_kg ,taxa_captura");
+            for(int i = 1; i < tamanho; i++){
+                fprintf(arq_do_jogador, "\n%7d,%15s,%11s,%11s,%6d,%4d,%7d,%7d,%16d,%16d,%11d,%8d,%9d,%11s, %7.2f , %6.2f ,%12d",
+                pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
+                pokedex[i].total, pokedex[i].hp, pokedex[i].attack, pokedex[i].defense,
+                pokedex[i].sp_attack, pokedex[i].sp_defense, pokedex[i].speed, pokedex[i].geracao,
+                pokedex[i].lendario, pokedex[i].cor, pokedex[i].altura, pokedex[i].peso,
+                pokedex[i].catch_rate);
+            }
+        }
+
 
     fclose(arq);
+    fclose(arq_do_jogador);
     free(pokedex);
 
     return 0;
