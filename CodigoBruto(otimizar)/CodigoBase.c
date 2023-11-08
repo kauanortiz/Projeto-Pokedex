@@ -16,7 +16,7 @@ typedef struct{
 
 typedef struct{ 
     
-    Pokemon Time[6]; 
+    int integrante;
 
 } Mochila;
 
@@ -574,31 +574,41 @@ void excluir_pokemon(Pokemon pokedex[], int tamanho){
 Essa relação deve aumentar e diminuir dinamicamente.*/
 int main(){
 
-    int opcao1, opcao2; //opções criadas para manuseamento dos switches
+    int opcao1, opcao2, opcao_poke, opcao_mochila; //opções criadas para manuseamento dos switches
     int tamanho = 722; //tamanho original de Pokémon na Pokédex
     char busca[16]; //utilizado para realizar a busca no tópico 3
     char nickname[31]; //armazena o nickname do jogador
 
     Pokemon* pokedex = (Pokemon*)malloc(tamanho * sizeof(Pokemon));
+    Mochila time[7];
+
+    //inicia os integrantes do time como 0
+    for(int i = 0; i < 7; i++){
+        time[i].integrante = 0;
+    }
 
     if(pokedex == NULL){
         printf("Erro: Memória insuficiente!\n");
         exit(1);
     }
 
+    //cria dois arquivos, um para ler a Pokédex, e um para armazenar o progresso do jogador
     FILE* arq;
     FILE* arq_do_jogador;
 
+    //exibe o menu principal
     printf("Seja bem-vindo treinador Pokémon, você deseja iniciar uma nova jornada ou continuar de onde parou? ");
     printf("\n1 - Novo jogo.\n2 - Carregar jogo.\n3 - Sair do jogo\n");
     printf("Insira sua opção: ");
     scanf("%d",&opcao1);
 
+    //while para que a opção seja inserida corretamente
     while(opcao1 < 1 || opcao1 > 3){
         printf("Opção inválida. Insira novamente sua opção: ");
         scanf("%d",&opcao1);
     }
 
+    //se opção 1 for escolhida, abre o arquivo .csv e cria um novo arquivo
     if(opcao1 == 1){
 
         arq = fopen("pokedex.csv", "r");
@@ -626,6 +636,8 @@ int main(){
         arq_do_jogador = fopen(nickname, "w+b");
         printf("\n");
 
+
+    //se opção dois for escolhida, abre o arquivo de progresso do jogador, e realiza as operações baseadas nesse arquivo
     }else if(opcao1 == 2){
 
         printf("Insira seu nickname: ");
@@ -653,70 +665,155 @@ int main(){
             &pokedex[i].catch_rate);
         }
 
+    //se opção 3 for escolhida, fecha o programa
     }else{
 
         exit(1);
 
     }
 
-
-    do{
-
-    printf("Menu opções:\n");
-    printf("1 - Inserir.\n2 - Listar.\n3 - Pesquisar.\n4 - Alterar.\n5 - Excluir.\n6 - Sair. \n");
+    //exibe o menu de opções do jogo
+    Menu:
+    printf("Menu principal:\n");
+    printf("1 - Mochila.\n2 - Coleção(PC).\n3 - Pokédex.\n4 - Sair.\n");
     printf("\n");
-    printf("Insira sua opção: ");
+    printf("Insira sua opção: "); //armazena a opção do jogador
     scanf("%d",&opcao2);
     printf("\n");
 
-    while(opcao2 < 1 || opcao2 > 6){
-        printf("\nOpção inválida. Insira novamente sua opção: ");
-        printf("\n");
+    //controle para o usuário não inserir uma opção indisponível
+    while(opcao2 < 0 || opcao2 > 4){
+        printf("Opção inválida. Insira novamente sua opção: ");
         scanf("%d",&opcao2);
+        printf("\n");
     }
 
-    switch(opcao2){
-
-        case 1: //adicionar novo Pokémon
-        tamanho++;
-        pokedex = realloc(pokedex, tamanho * sizeof(Pokemon));
-
-        inserir_novo(pokedex, tamanho);
-
-        break;
-
-
-        case 2: //listar todos os Pokémon
-
-        listar_todos(pokedex, tamanho);            
-
-        break;
-
-
-        case 3: //buscar um Pokémon na Pokédex
-
-        buscar_pokemon(pokedex, tamanho, busca);
-
-        break;
-
-
-        case 4: //alterar dados de um Pokémon específico
+    //se a opção for escolhida, abre a mochila e permite ao usuário realizar operações de inserção e conferimento
+    if(opcao2 == 1){
         
-        alterar_pokemon(pokedex, tamanho);
+        do{
+        printf("Mochila:\n");
+        printf("1 - Inserir Pokémon no time.\n2 - Visualizar time.\n3 - Voltar.\n");
+        printf("\n");
+        printf("Insira sua opção: ");
+        scanf("%d",&opcao_mochila);
+        printf("\n");
 
-        break;
+        while(opcao_mochila < 0 || opcao_mochila > 3){
+            printf("Opção inválida. Insira novamente sua opção: ");
+            scanf("%d",&opcao_mochila);
+            printf("\n");
+        }
+
+        //se opção da mochila for 1, insere o time
+       if(opcao_mochila == 1){
+
+            for(int i = 1; i < 7; i++){
+                printf("Insira o número do %d° Pokémon do time: ",i);
+                scanf("%d",&time[i].integrante);
+
+                while(time[i].integrante <= 0 || time[i].integrante > tamanho){
+                    printf("Pokémon inválido. Insira um número válido: ");
+                    scanf("%d",&time[i].integrante);
+                }
+            }
+
+            printf("\n");
+
+        //se opção da mochila for 2, exibe o time escolhido
+        }else if(opcao_mochila == 2){
 
 
-        case 5: //exclusão de um Pokémon
+            if(time[1].integrante == 0){
+                printf("Time ainda não preenchido.\n");
+                printf("\n");
 
-        excluir_pokemon(pokedex, tamanho);
+            }else{
+                for(int i = 1; i < 7; i++){
+                    printf("%d° Pokémon: %s.\n",i, pokedex[time[i].integrante].nome);
+                }
+                printf("\n");
+            }
 
-        break;
+        //fecha o programa
+        }else{
 
+            goto Menu;
+            
+        }
+
+        }while(opcao_mochila != 3);
+
+
+    //se opção 3 for escolhida, permite ao usuário realizar operações na Pokédex
+    }else if(opcao2 == 3){
+
+        do{
+
+        printf("Pokédex:\n");
+        printf("1 - Inserir.\n2 - Listar.\n3 - Pesquisar.\n4 - Alterar.\n5 - Excluir.\n6 - Voltar. \n");
+        printf("\n");
+        printf("Insira sua opção: ");
+        scanf("%d",&opcao_poke);
+        printf("\n");
+
+        while(opcao_poke < 1 || opcao_poke > 6){
+            printf("\nOpção inválida. Insira novamente sua opção: ");
+            printf("\n");
+            scanf("%d",&opcao_poke);
+        }
+
+        //permite realizar operações de inserção, listar, pesquisar, alterar e excluir. além é claro de sair
+        switch(opcao_poke){
+
+            case 1: //adicionar novo Pokémon
+            tamanho++;
+            pokedex = realloc(pokedex, tamanho * sizeof(Pokemon));
+
+            inserir_novo(pokedex, tamanho);
+
+            break;
+
+
+            case 2: //listar todos os Pokémon
+
+            listar_todos(pokedex, tamanho);            
+
+            break;
+
+
+            case 3: //buscar um Pokémon na Pokédex
+
+            buscar_pokemon(pokedex, tamanho, busca);
+
+            break;
+
+
+            case 4: //alterar dados de um Pokémon específico
+            
+            alterar_pokemon(pokedex, tamanho);
+
+            break;
+
+
+            case 5: //exclusão de um Pokémon
+
+            excluir_pokemon(pokedex, tamanho);
+
+            break;
+
+            case 6:
+
+            goto Menu;
+
+            break;
+
+        }
+
+        }while(opcao_poke != 6);
     }
 
-    }while(opcao2 != 6);
-
+        //se opção do inicio for 1, salva os dados modificados no arquivo nomeado no inicio pelo jogador
         if(opcao1 == 1){
             
             fprintf(arq_do_jogador, "numero ,nome           ,tipo1      ,tipo2      ,total ,hp  ,ataque ,defesa ,ataque_especial ,defesa_especial ,velocidade ,geracao ,lendario ,cor        ,altura_m ,peso_kg ,taxa_captura");
@@ -728,6 +825,8 @@ int main(){
                 pokedex[i].lendario, pokedex[i].cor, pokedex[i].altura, pokedex[i].peso,
                 pokedex[i].catch_rate);
         }
+
+        //se opção do inicio for 2, sobrescreve os dados do arquivo salvo anteriormente
         }else if(opcao1 == 2){
 
             fclose(arq_do_jogador);
@@ -744,7 +843,7 @@ int main(){
             }
         }
 
-
+    //fecha os arquivos e libera a memória alocada
     fclose(arq);
     fclose(arq_do_jogador);
     free(pokedex);
