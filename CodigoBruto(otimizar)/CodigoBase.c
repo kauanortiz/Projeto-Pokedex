@@ -33,13 +33,11 @@ void inserir_novo(Pokemon pokedex[], int tamanho){
         //inserção do nome
         printf("Insira o nome do Pokémon desejado para inserção: ");
         ler_nomes(pokedex[tamanho - 1].nome, 15);
-        printf("\n");
 
         //inserção do número
         printf("Insira o número desse pokémon ");
         printf("(Obs: Necessita ser maior que %d pois é o número do último da lista): ",tamanho - 2);
         scanf("%d",&pokedex[tamanho - 1].numero);
-        printf("\n");
 
         while(pokedex[tamanho - 1].numero <= tamanho  - 2){
             printf("Valor inválido. Insira um novo valor: ");
@@ -78,7 +76,6 @@ void inserir_novo(Pokemon pokedex[], int tamanho){
         //inserção do valor total
         printf("Insira o valor total desse Pokémon: ");
         scanf("%d",&pokedex[tamanho - 1].total);
-        printf("\n");
 
         while(pokedex[tamanho - 1].total <= 0){
             printf("Valor inválido. Insira um valor adequado: ");
@@ -89,7 +86,6 @@ void inserir_novo(Pokemon pokedex[], int tamanho){
         //inserção do HP total do Pokémon
         printf("Insira o HP total desse Pokémon: ");
         scanf("%d",&pokedex[tamanho - 1].hp);
-        printf("\n");
 
         while(pokedex[tamanho - 1].hp <= 0){
             printf("HP inválido. Insira um valor adequado: ");
@@ -109,7 +105,6 @@ void inserir_novo(Pokemon pokedex[], int tamanho){
 
         printf("Defesa: ");
         scanf("%d",&pokedex[tamanho - 1].defense);
-        printf("\n");
 
         while(pokedex[tamanho - 1].defense <= 0){
             printf("Defesa inválida. Insira um valor adequado: ");
@@ -128,7 +123,6 @@ void inserir_novo(Pokemon pokedex[], int tamanho){
 
         printf("Defesa Esp.: ");
         scanf("%d",&pokedex[tamanho - 1].sp_defense);
-        printf("\n");
 
         while(pokedex[tamanho - 1].sp_defense <= 0){
             printf("Defesa Esp. inválida. Insira um valor adequado: ");
@@ -138,7 +132,6 @@ void inserir_novo(Pokemon pokedex[], int tamanho){
 
         printf("Por fim, insira sua velocidade: ");
         scanf("%d",&pokedex[tamanho - 1].speed);
-        printf("\n");
 
         while(pokedex[tamanho - 1].speed <= 0){
             printf("Velocidade inválida. Insira um valor adequado: ");
@@ -170,7 +163,6 @@ void inserir_novo(Pokemon pokedex[], int tamanho){
 
         printf("Peso: ");
         scanf("%f",&pokedex[tamanho - 1].peso);
-        printf("\n");
 
         while(pokedex[tamanho - 1].peso <= 0.0){
             printf("Peso inválido. Insira um valor adequado: ");
@@ -183,7 +175,7 @@ void inserir_novo(Pokemon pokedex[], int tamanho){
         printf("\n");
 
         while(pokedex[tamanho - 1].catch_rate <= 0){
-            printf("Altura inválida. Insira um valor adequado: ");
+            printf("Taxa de captura inválida. Insira um valor adequado: ");
             scanf("%d",&pokedex[tamanho - 1].catch_rate);
             printf("\n");
 
@@ -367,7 +359,7 @@ void alterar_pokemon(Pokemon pokedex[], int tamanho){
         scanf("%d",&indice);
         printf("\n");
 
-        while(indice <= 0 || indice > (tamanho - 1)){
+        while(indice <= 0){
             printf("Valor inválido. Insira um valor válido.\n");
             scanf("%d",&indice);
         }
@@ -386,7 +378,6 @@ void alterar_pokemon(Pokemon pokedex[], int tamanho){
                 printf("Insira o novo número desse Pokémon ");
                 printf("(Obs: Necessita ser diferente dos demais contidos na Pokédex): ");
                 scanf("%d",&pokedex[i].numero);
-                printf("\n");
 
                 while(pokedex[i].numero <= (tamanho - 1)){
                     printf("Valor inválido. Insira um novo valor: ");
@@ -397,7 +388,6 @@ void alterar_pokemon(Pokemon pokedex[], int tamanho){
                 //alteração da geração
                 printf("Insira a nova geração desse Pokémon: ");
                 scanf("%d",&pokedex[i].geracao);
-                printf("\n");
 
                 while(pokedex[i].geracao <= 0){
                     printf("Valor inválido. Insira um novo valor: ");
@@ -426,7 +416,6 @@ void alterar_pokemon(Pokemon pokedex[], int tamanho){
                 //alteração do valor total
                 printf("Insira o novo valor total desse Pokémon: ");
                 scanf("%d",&pokedex[i].total);
-                printf("\n");
 
                 while(pokedex[i].total <= 0){
                     printf("Valor inválido. Insira um valor adequado: ");
@@ -437,7 +426,6 @@ void alterar_pokemon(Pokemon pokedex[], int tamanho){
                 //alteração do HP total do Pokémon
                 printf("Insira o novo HP total desse Pokémon: ");
                 scanf("%d",&pokedex[i].hp);
-                printf("\n");
 
                 while(pokedex[i].hp <= 0){
                     printf("HP inválido. Insira um valor adequado: ");
@@ -457,7 +445,6 @@ void alterar_pokemon(Pokemon pokedex[], int tamanho){
 
                 printf("Defesa: ");
                 scanf("%d",&pokedex[i].defense);
-                printf("\n");
 
                 while(pokedex[i].defense <= 0){
                     printf("Defesa inválida. Insira um valor adequado: ");
@@ -476,7 +463,6 @@ void alterar_pokemon(Pokemon pokedex[], int tamanho){
 
                 printf("Defesa Esp.: ");
                 scanf("%d",&pokedex[i].sp_defense);
-                printf("\n");
 
                 while(pokedex[i].sp_defense <= 0){
                     printf("Defesa Esp. inválida. Insira um valor adequado: ");
@@ -486,7 +472,6 @@ void alterar_pokemon(Pokemon pokedex[], int tamanho){
 
                 printf("Por fim, insira sua nova velocidade: ");
                 scanf("%d",&pokedex[i].speed);
-                printf("\n");
 
                 while(pokedex[i].speed <= 0){
                     printf("Velocidade inválida. Insira um valor adequado: ");
@@ -517,7 +502,6 @@ void alterar_pokemon(Pokemon pokedex[], int tamanho){
 
                 printf("Peso: ");
                 scanf("%f",&pokedex[i].peso);
-                printf("\n");
 
                 while(pokedex[i].peso <= 0.0){
                     printf("Peso inválido. Insira um valor adequado: ");
@@ -632,16 +616,16 @@ int main(){
 
         printf("Insira seu nickname: ");
         ler_nomes(nickname, 30);
-        strcat(nickname, ".csv");
-        arq_do_jogador = fopen(nickname, "w");
+        strcat(nickname, ".bin");
+        arq_do_jogador = fopen(nickname, "w+b");
         printf("\n");
 
     }else if(opcao1 == 2){
 
         printf("Insira seu nickname: ");
         ler_nomes(nickname, 30);
-        strcat(nickname, ".csv");
-        arq_do_jogador = fopen(nickname, "r");
+        strcat(nickname, ".bin");
+        arq_do_jogador = fopen(nickname, "r+b");
 
         if(arq_do_jogador == NULL){
             printf("Erro na abertura do arquivo.\n");
@@ -741,7 +725,7 @@ int main(){
         }else if(opcao1 == 2){
 
             fclose(arq_do_jogador);
-            arq_do_jogador = fopen(nickname, "w");
+            arq_do_jogador = fopen(nickname, "w+b");
 
             fprintf(arq_do_jogador, "numero ,nome           ,tipo1      ,tipo2      ,total ,hp  ,ataque ,defesa ,ataque_especial ,defesa_especial ,velocidade ,geracao ,lendario ,cor        ,altura_m ,peso_kg ,taxa_captura");
             for(int i = 1; i < tamanho; i++){
