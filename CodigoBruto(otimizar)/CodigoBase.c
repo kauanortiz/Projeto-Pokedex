@@ -47,6 +47,7 @@ void contar_linhas(FILE* arq, int tamanho){
         }
         
     }
+    tamanho--;
 }
 
 void inserir_novo(Pokemon pokedex[], int tamanho){
@@ -829,7 +830,7 @@ int main(){
             //fecha o programa
             case 4:
 
-                goto Menu;
+                exit(1);
 
                 break;
                 
@@ -1070,9 +1071,6 @@ int main(){
 
     }else{
 
-        exit(1);
-    }
-
         //se opção do inicio for 1, salva os dados modificados no arquivo nomeado no inicio pelo jogador
         if(main_menu == 1){
             
@@ -1102,6 +1100,7 @@ int main(){
                 pokedex[i].catch_rate);
             }
         }
+    }
 
     //fecha os arquivos e libera a memória alocada
     fclose(arq);
