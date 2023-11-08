@@ -531,35 +531,41 @@ void alterar_pokemon(Pokemon pokedex[], int tamanho){
 void excluir_pokemon(Pokemon pokedex[], int tamanho){
 
     int indice;
+    int achou = 0;
 
     printf("Insira o número do Pokémon que deseja excluir: ");
     scanf("%d",&indice);
 
-    while(indice <= 0 || indice > (tamanho - 1)){
-        printf("Valor inválido. Insira um novo valor: ");
-        scanf("%d",&indice);
-        printf("\n");
+    for(int i = 0; i < tamanho; i++){
+        if(indice == pokedex[i].numero){
+
+            achou++;
+
+            pokedex[indice].nome[0] = '\0';
+            pokedex[indice].tipo1[0] = '\0';
+            pokedex[indice].tipo2[0] = '\0';
+            pokedex[indice].total = 0;
+            pokedex[indice].hp = 0;
+            pokedex[indice].attack = 0;
+            pokedex[indice].defense = 0;
+            pokedex[indice].sp_attack = 0;
+            pokedex[indice].sp_defense = 0;
+            pokedex[indice].speed = 0;
+            pokedex[indice].geracao = 0;
+            pokedex[indice].lendario = 0;
+            pokedex[indice].cor[0] = '\0';
+            pokedex[indice].altura = 0.0;
+            pokedex[indice].peso = 0.0;
+            pokedex[indice].catch_rate = 0;
+        }
     }
-
-        pokedex[indice].nome[0] = '\0';
-        pokedex[indice].tipo1[0] = '\0';
-        pokedex[indice].tipo2[0] = '\0';
-        pokedex[indice].total = 0;
-        pokedex[indice].hp = 0;
-        pokedex[indice].attack = 0;
-        pokedex[indice].defense = 0;
-        pokedex[indice].sp_attack = 0;
-        pokedex[indice].sp_defense = 0;
-        pokedex[indice].speed = 0;
-        pokedex[indice].geracao = 0;
-        pokedex[indice].lendario = 0;
-        pokedex[indice].cor[0] = '\0';
-        pokedex[indice].altura = 0.0;
-        pokedex[indice].peso = 0.0;
-        pokedex[indice].catch_rate = 0;
-
+    
+    if(achou != 0){
         printf("Pokémon excluído com sucesso!\n");
         printf("\n");
+    }else{
+        printf("Pokémon não encontrado.\n");
+    }
 
 }
 
