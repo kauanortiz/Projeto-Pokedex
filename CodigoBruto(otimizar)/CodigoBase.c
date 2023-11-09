@@ -605,6 +605,12 @@ int main(){
     int alterar; //para alterar um Pokémon no time
 
     Pokemon* pokedex = (Pokemon*)malloc(tamanho * sizeof(Pokemon));
+
+        if(pokedex == NULL){
+        printf("Erro: Memória insuficiente!\n");
+        exit(1);
+    }
+
     Mochila meu_time[7];
     Colecao minha_colecao[251];
 
@@ -616,11 +622,6 @@ int main(){
     //inicia os elementos da coleção como 0
     for(int i = 1; i < 251; i++){
         minha_colecao[i].pokemon = 0;
-    }
-
-    if(pokedex == NULL){
-        printf("Erro: Memória insuficiente!\n");
-        exit(1);
     }
 
     //cria dois arquivos, um para ler a Pokédex, e um para armazenar o progresso do jogador
@@ -681,8 +682,7 @@ int main(){
             exit(1);
         }
         printf("\n");
-
-       
+        
 
         fseek(arq_do_jogador, 184, SEEK_SET);
 
@@ -694,6 +694,14 @@ int main(){
             &pokedex[i].sp_attack, &pokedex[i].sp_defense, &pokedex[i].speed, &pokedex[i].geracao,
             &pokedex[i].lendario, pokedex[i].cor, &pokedex[i].altura, &pokedex[i].peso,
             &pokedex[i].catch_rate);
+        }
+
+        fscanf(arq_do_jogador,"%d,%d,%d,%d,%d,%d",
+        &meu_time[1].integrante, &meu_time[2].integrante, &meu_time[3].integrante,
+        &meu_time[4].integrante, &meu_time[5].integrante, &meu_time[6].integrante);
+
+        for(int i = 1; i < 251; i++){
+            fscanf(arq_do_jogador,"%d",&minha_colecao[i].pokemon);
         }
 
     //se opção 3 for escolhida, fecha o programa
@@ -830,7 +838,7 @@ int main(){
             //fecha o programa
             case 4:
 
-                exit(1);
+                goto Menu;
 
                 break;
                 
@@ -1082,7 +1090,14 @@ int main(){
                 pokedex[i].sp_attack, pokedex[i].sp_defense, pokedex[i].speed, pokedex[i].geracao,
                 pokedex[i].lendario, pokedex[i].cor, pokedex[i].altura, pokedex[i].peso,
                 pokedex[i].catch_rate);
-        }
+            }
+            fprintf(arq_do_jogador, "\n%d,%d,%d,%d,%d,%d",
+            meu_time[1].integrante, meu_time[2].integrante, meu_time[3].integrante,
+            meu_time[4].integrante, meu_time[5].integrante, meu_time[6].integrante);
+
+            for(int i = 1; i < 251; i++){
+                fprintf(arq_do_jogador, "\n%d",minha_colecao[i].pokemon);
+            }
 
         //se opção do inicio for 2, sobrescreve os dados do arquivo salvo anteriormente
         }else if(main_menu == 2){
