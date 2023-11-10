@@ -591,6 +591,92 @@ void excluir_pokemon(Pokemon pokedex[], int tamanho){
 
 }
 
+void inserir_no_time(Mochila meu_time[], int tamanho){
+
+    if(meu_time[1].integrante != 0){
+                    printf("Time já preenchido.\n");
+                    printf("\n");
+
+                    return;
+                }
+
+                for(int i = 1; i < 7; i++){
+                    printf("Insira o número do %d° Pokémon do time: ",i);
+                    scanf("%d",&meu_time[i].integrante);
+
+                    while(meu_time[i].integrante == meu_time[i - 1].integrante ){
+                        printf("Pokémon já adicionado ao time. Insira outro: ");
+                        scanf("%d",&meu_time[i].integrante);
+                        printf("\n");
+                    }
+                    while(meu_time[i].integrante <= 0 || meu_time[i].integrante > tamanho){
+                        printf("Pokémon inválido. Insira um número válido: ");
+                        scanf("%d",&meu_time[i].integrante);
+                        printf("\n");
+                    }
+                }
+
+                printf("\n");
+
+}
+
+void exibir_time(Mochila meu_time[], Pokemon pokedex[]){
+
+    if(meu_time[1].integrante == 0){
+        printf("Time ainda não preenchido.\n");
+        printf("\n");
+
+    }else{
+        for(int i = 1; i < 7; i++){
+            printf("%d° Pokémon: %s.\n",i, pokedex[meu_time[i].integrante].nome);
+        }
+        printf("\n");
+    }
+}
+
+void alterar_time(Mochila meu_time[], Pokemon pokedex[], int tamanho){
+
+    int alterar;
+
+    if(meu_time[1].integrante == 0){
+        printf("Time ainda não preenchido.\n");
+        printf("\n");
+
+    return;
+
+    }else{
+
+        printf("Time atual:\n");
+
+        for(int i = 1; i < 7; i++){
+            printf("[%d]: %s.\n",i, pokedex[meu_time[i].integrante].nome);
+        }
+        printf("\n");
+    }
+
+    printf("Qual deles deseja alterar? ");
+    scanf("%d",&alterar);
+    printf("\n");
+
+    while(alterar < 1 || alterar > 6){
+
+        printf("Valor inválido. Insira novamente: ");
+        scanf("%d",&alterar);
+        printf("\n");
+    }
+    printf("Qual o número do Pokémon que deseja colocar no lugar de %s? ", pokedex[meu_time[alterar].integrante].nome);
+    scanf("%d",&meu_time[alterar].integrante);
+    printf("\n");
+
+    while(meu_time[alterar].integrante <= 0 || meu_time[alterar].integrante > tamanho){
+        printf("Pokémon inválido. Insira um número válido: ");
+        scanf("%d",&meu_time[alterar].integrante);
+        printf("\n");
+    }
+    printf("Pokémon alterado com sucesso.\n");
+    printf("\n");
+}
+
 /*Deverá permitir cadastrar
 (inserir/listar/pesquisar/alterar/excluir) os Pokémons disponíveis para serem capturados.
 Essa relação deve aumentar e diminuir dinamicamente.*/
@@ -602,7 +688,6 @@ int main(){
     char nickname[31]; //armazena o nickname do jogador
     int posicao; //para preenchimento da coleção
     int achou = 0; //para que as buscas sejam realizadas
-    int alterar; //para alterar um Pokémon no time
 
     Pokemon* pokedex = (Pokemon*)malloc(tamanho * sizeof(Pokemon));
 
@@ -629,7 +714,7 @@ int main(){
     FILE* arq_do_jogador;
 
     //exibe o menu principal
-    printf("Seja bem-vindo treinador Pokémon, você deseja iniciar uma nova jornada ou continuar de onde parou? ");
+    printf("\nSeja bem-vindo treinador Pokémon, você deseja iniciar uma nova jornada ou continuar de onde parou? ");
     printf("\n1 - Novo jogo.\n2 - Carregar jogo.\n3 - Sair do jogo\n");
     printf("Insira sua opção: ");
     scanf("%d",&main_menu);
@@ -683,7 +768,8 @@ int main(){
         }
         printf("\n");
         
-
+        contar_linhas(arq_do_jogador, tamanho);
+        
         fseek(arq_do_jogador, 184, SEEK_SET);
 
         for(int i = 1; i < tamanho; i++){
@@ -731,7 +817,7 @@ int main(){
     if(menu_jogo == 1){
         
         do{
-            mochila:
+            
             printf("Mochila:\n");
             printf("1 - Inserir Pokémon no time.\n2 - Visualizar time.\n3 - Alterar equipe.\n4 - Voltar.\n");
             printf("\n");
@@ -750,88 +836,21 @@ int main(){
             //se opção da mochila for 1, insere o time
             case 1:
 
-                if(meu_time[1].integrante != 0){
-                    printf("Time já preenchido.\n");
-                    printf("\n");
-
-                    break;
-                }
-
-                for(int i = 1; i < 7; i++){
-                    printf("Insira o número do %d° Pokémon do time: ",i);
-                    scanf("%d",&meu_time[i].integrante);
-
-                    while(meu_time[i].integrante == meu_time[i - 1].integrante ){
-                        printf("Pokémon já adicionado ao time. Insira outro: ");
-                        scanf("%d",&meu_time[i].integrante);
-                        printf("\n");
-                    }
-                    while(meu_time[i].integrante <= 0 || meu_time[i].integrante > tamanho){
-                        printf("Pokémon inválido. Insira um número válido: ");
-                        scanf("%d",&meu_time[i].integrante);
-                        printf("\n");
-                    }
-                }
-
-                printf("\n");
+                inserir_no_time(meu_time, tamanho);
 
                 break;
 
             //se opção da mochila for 2, exibe o time escolhido
             case 2:
 
-                if(meu_time[1].integrante == 0){
-                    printf("Time ainda não preenchido.\n");
-                    printf("\n");
-
-                }else{
-                    for(int i = 1; i < 7; i++){
-                        printf("%d° Pokémon: %s.\n",i, pokedex[meu_time[i].integrante].nome);
-                    }
-                    printf("\n");
-                }
+                exibir_time(meu_time, pokedex);
 
                 break;
 
             //permite alterar os membros do time
             case 3:
 
-            if(meu_time[1].integrante == 0){
-                printf("Time ainda não preenchido.\n");
-                printf("\n");
-
-                goto mochila;
-
-            }else{
-                printf("Time atual:\n");
-
-                for(int i = 1; i < 7; i++){
-                    printf("[%d]: %s.\n",i, pokedex[meu_time[i].integrante].nome);
-                }
-                printf("\n");
-            }
-
-            printf("Qual deles deseja alterar? ");
-            scanf("%d",&alterar);
-            printf("\n");
-
-            while(alterar < 1 || alterar > 6){
-
-                printf("Valor inválido. Insira novamente: ");
-                scanf("%d",&alterar);
-                printf("\n");
-            }
-            printf("Qual o número do Pokémon que deseja colocar no lugar de %s? ", pokedex[meu_time[alterar].integrante].nome);
-            scanf("%d",&meu_time[alterar].integrante);
-            printf("\n");
-
-            while(meu_time[alterar].integrante <= 0 || meu_time[alterar].integrante > tamanho){
-                printf("Pokémon inválido. Insira um número válido: ");
-                scanf("%d",&meu_time[alterar].integrante);
-                printf("\n");
-            }
-            printf("Pokémon alterado com sucesso.\n");
-            printf("\n");
+                alterar_time(meu_time, pokedex, tamanho);
 
             break;
 
@@ -1101,7 +1120,7 @@ int main(){
 
         //se opção do inicio for 2, sobrescreve os dados do arquivo salvo anteriormente
         }else if(main_menu == 2){
-
+            
             fclose(arq_do_jogador);
             arq_do_jogador = fopen(nickname, "w+b");
 
