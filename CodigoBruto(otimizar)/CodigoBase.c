@@ -34,22 +34,6 @@ void ler_nomes(char pokemon[], int size){
 
 }
 
-void contar_linhas(FILE* arq, int tamanho){
-
-    char c;
-    tamanho = 0;
-
-        while((c = fgetc(arq)) != EOF){
-    
-        //se o ponteiro for igual a \n, uma linha é contabilizada
-        if(c == '\n'){
-            tamanho++;
-        }
-        
-    }
-    tamanho--;
-}
-
 void inserir_novo(Pokemon pokedex[], int tamanho){
 
         //inserção do nome
@@ -689,7 +673,7 @@ int main(){
     int posicao; //para preenchimento da coleção
     int achou = 0; //para que as buscas sejam realizadas
 
-    Pokemon* pokedex = (Pokemon*)malloc(tamanho * sizeof(Pokemon));
+    Pokemon pokedex[tamanho];
 
         if(pokedex == NULL){
         printf("Erro: Memória insuficiente!\n");
@@ -767,9 +751,18 @@ int main(){
             exit(1);
         }
         printf("\n");
-        
-        contar_linhas(arq_do_jogador, tamanho);
-        
+
+        char c;
+        tamanho = 0;
+
+        while((c = fgetc(arq_do_jogador)) != ';'){
+    
+        //se o ponteiro for igual a \n, uma linha é contabilizada
+            if(c == '\n'){
+            tamanho++;
+            }
+        }
+
         fseek(arq_do_jogador, 184, SEEK_SET);
 
         for(int i = 1; i < tamanho; i++){
@@ -781,10 +774,13 @@ int main(){
             &pokedex[i].lendario, pokedex[i].cor, &pokedex[i].altura, &pokedex[i].peso,
             &pokedex[i].catch_rate);
         }
+        fseek(arq_do_jogador, 2, SEEK_CUR);
 
         fscanf(arq_do_jogador,"%d,%d,%d,%d,%d,%d",
         &meu_time[1].integrante, &meu_time[2].integrante, &meu_time[3].integrante,
         &meu_time[4].integrante, &meu_time[5].integrante, &meu_time[6].integrante);
+
+        fseek(arq_do_jogador, 2, SEEK_CUR);
 
         for(int i = 1; i < 251; i++){
             fscanf(arq_do_jogador,"%d",&minha_colecao[i].pokemon);
@@ -1051,9 +1047,8 @@ int main(){
         switch(menu_poke){
 
             case 1: //adicionar novo Pokémon
-            tamanho++;
-            pokedex = realloc(pokedex, tamanho * sizeof(Pokemon));
 
+            tamanho++;
             inserir_novo(pokedex, tamanho);
 
             break;
@@ -1110,10 +1105,12 @@ int main(){
                 pokedex[i].lendario, pokedex[i].cor, pokedex[i].altura, pokedex[i].peso,
                 pokedex[i].catch_rate);
             }
+            fprintf(arq_do_jogador, "\n;");
             fprintf(arq_do_jogador, "\n%d,%d,%d,%d,%d,%d",
             meu_time[1].integrante, meu_time[2].integrante, meu_time[3].integrante,
             meu_time[4].integrante, meu_time[5].integrante, meu_time[6].integrante);
 
+            fprintf(arq_do_jogador, "\n;");
             for(int i = 1; i < 251; i++){
                 fprintf(arq_do_jogador, "\n%d",minha_colecao[i].pokemon);
             }
