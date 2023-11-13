@@ -873,7 +873,7 @@ int main(){
         printf("Insira seu nickname: ");
         ler_nomes(nickname, 30);
         strcat(nickname, ".data");
-        arq_do_jogador = fopen(nickname, "w+b");
+        arq_do_jogador = fopen(nickname, "wb");
         printf("\n");
 
 
@@ -883,7 +883,7 @@ int main(){
         printf("Insira seu nickname: ");
         ler_nomes(nickname, 30);
         strcat(nickname, ".data");
-        arq_do_jogador = fopen(nickname, "r+b");
+        arq_do_jogador = fopen(nickname, "rb");
 
         if(arq_do_jogador == NULL){
             printf("Erro na abertura do arquivo.\n");
@@ -1126,7 +1126,7 @@ int main(){
 
 
             case 5: //exclusão de um Pokémon
-
+            
             excluir_pokemon(pokedex, tamanho);
 
             break;
@@ -1142,52 +1142,47 @@ int main(){
         }while(menu_poke != 6);
 
     }else{
-
-        //se opção do inicio for 1, salva os dados modificados no arquivo nomeado no inicio pelo jogador
-        if(main_menu == 1){
-            
-            fprintf(arq_do_jogador, "numero ,nome           ,tipo1      ,tipo2      ,total ,hp  ,ataque ,defesa ,ataque_especial ,defesa_especial ,velocidade ,geracao ,lendario ,cor        ,altura_m ,peso_kg ,taxa_captura");
-            for(int i = 1; i < tamanho; i++){
-                fprintf(arq_do_jogador, "\n%7d,%15s,%11s,%11s,%6d,%4d,%7d,%7d,%16d,%16d,%11d,%8d,%9d,%11s, %7.2f , %6.2f ,%12d",
-                pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
-                pokedex[i].total, pokedex[i].hp, pokedex[i].attack, pokedex[i].defense,
-                pokedex[i].sp_attack, pokedex[i].sp_defense, pokedex[i].speed, pokedex[i].geracao,
-                pokedex[i].lendario, pokedex[i].cor, pokedex[i].altura, pokedex[i].peso,
-                pokedex[i].catch_rate);
-            }
-
-            fprintf(arq_do_jogador, "\n;");
-            fprintf(arq_do_jogador, "\n%d,%d,%d,%d,%d,%d",
-            meu_time[1].integrante, meu_time[2].integrante, meu_time[3].integrante,
-            meu_time[4].integrante, meu_time[5].integrante, meu_time[6].integrante);
-
-            fprintf(arq_do_jogador, "\n;");
-            for(int i = 1; i < 251; i++){
-                fprintf(arq_do_jogador, "\n%d",minha_colecao[i].pokemon);
-            }
-
-        //se opção do inicio for 2, sobrescreve os dados do arquivo salvo anteriormente
-        }else if(main_menu == 2){
-            
-            fclose(arq_do_jogador);
-            arq_do_jogador = fopen(nickname, "w+b");
-
-            fprintf(arq_do_jogador, "numero ,nome           ,tipo1      ,tipo2      ,total ,hp  ,ataque ,defesa ,ataque_especial ,defesa_especial ,velocidade ,geracao ,lendario ,cor        ,altura_m ,peso_kg ,taxa_captura");
-            for(int i = 1; i < tamanho; i++){
-                fprintf(arq_do_jogador, "\n%7d,%15s,%11s,%11s,%6d,%4d,%7d,%7d,%16d,%16d,%11d,%8d,%9d,%11s, %7.2f , %6.2f ,%12d",
-                pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
-                pokedex[i].total, pokedex[i].hp, pokedex[i].attack, pokedex[i].defense,
-                pokedex[i].sp_attack, pokedex[i].sp_defense, pokedex[i].speed, pokedex[i].geracao,
-                pokedex[i].lendario, pokedex[i].cor, pokedex[i].altura, pokedex[i].peso,
-                pokedex[i].catch_rate);
-            }
+        
+        if(arq != NULL){
+            fclose(arq);
         }
-    }
 
-    //fecha os arquivos e libera a memória alocada
-    fclose(arq);
-    fclose(arq_do_jogador);
-    free(pokedex);
+        if(arq_do_jogador != NULL){
+            fclose(arq_do_jogador);
+        }
+
+        //abre o arquivo do jogador de acordo com o nickname
+        arq_do_jogador = fopen(nickname, "wb");
+
+        if(arq_do_jogador == NULL){
+            printf("Erro na abertura do arquivo do jogador.\n");
+            exit(1);
+        }
+
+        fprintf(arq_do_jogador, "numero ,nome           ,tipo1      ,tipo2      ,total ,hp  ,ataque ,defesa ,ataque_especial ,defesa_especial ,velocidade ,geracao ,lendario ,cor        ,altura_m ,peso_kg ,taxa_captura");
+        for(int i = 1; i < tamanho; i++){
+            fprintf(arq_do_jogador, "\n%7d,%15s,%11s,%11s,%6d,%4d,%7d,%7d,%16d,%16d,%11d,%8d,%9d,%11s, %7.2f , %6.2f ,%12d",
+                    pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
+                    pokedex[i].total, pokedex[i].hp, pokedex[i].attack, pokedex[i].defense,
+                    pokedex[i].sp_attack, pokedex[i].sp_defense, pokedex[i].speed, pokedex[i].geracao,
+                    pokedex[i].lendario, pokedex[i].cor, pokedex[i].altura, pokedex[i].peso,
+                    pokedex[i].catch_rate);
+        }
+
+        fprintf(arq_do_jogador, "\n;");
+        fprintf(arq_do_jogador, "\n%d,%d,%d,%d,%d,%d",
+                meu_time[1].integrante, meu_time[2].integrante, meu_time[3].integrante,
+                meu_time[4].integrante, meu_time[5].integrante, meu_time[6].integrante);
+
+        fprintf(arq_do_jogador, "\n;");
+        for(int i = 1; i < 251; i++){
+            fprintf(arq_do_jogador, "\n%d", minha_colecao[i].pokemon);
+        }
+    
+        //fecha o arquivo e libera a memória alocada
+        fclose(arq_do_jogador);
+        free(pokedex);
+    }
 
     return 0;
 
