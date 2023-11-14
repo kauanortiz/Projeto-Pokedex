@@ -14,7 +14,7 @@ typedef struct{
 } Pokemon;
 
 //recebe um nome e salva-o
-void ler_nomes(char pokemon[], int size);
+void ler_nomes(char codigo_pokemon[], int size);
 
 //insere um novo Pokémon na Pokédex
 void inserir_novo(Pokemon pokedex[], int tamanho);
