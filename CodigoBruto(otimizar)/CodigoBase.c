@@ -859,6 +859,7 @@ int main(){
 
     //pula a primeira linha do arquivo e começa a leitura dos dados
     fseek(arq, 174, SEEK_SET);
+    
 
     for(int i = 1; i < tamanho; i++){
 
@@ -869,6 +870,8 @@ int main(){
          &pokedex[i].lendario, pokedex[i].cor, &pokedex[i].altura, &pokedex[i].peso,
          &pokedex[i].catch_rate);
     }
+
+    fclose(arq);
 
         printf("Insira seu nickname: ");
         ler_nomes(nickname, 30);
@@ -891,8 +894,8 @@ int main(){
         }
         printf("\n");
         
-        //trecho do projeto que calcula as linhas do novo arquivo
-        tamanho = 1;
+        //trecho do código que calcula as linhas do novo arquivo
+        tamanho = 0;
 
         while((c = fgetc(arq_do_jogador)) != ';'){
     
@@ -908,6 +911,7 @@ int main(){
 
         //move o ponteiro de leitura de modo que a primeira linha não seja lida
         fseek(arq_do_jogador, 184, SEEK_SET);
+        
 
         for(int i = 1; i < tamanho; i++){
 
@@ -992,8 +996,9 @@ int main(){
 
             //permite alterar os membros do time
             case 3:
-
+                printf("%d\n",meu_time[1].integrante);
                 alterar_time(meu_time, pokedex, tamanho);
+                printf("%d\n",meu_time[1].integrante);
 
             break;
 
@@ -1096,6 +1101,7 @@ int main(){
         switch(menu_poke){
 
             case 1: //adicionar novo Pokémon
+            
             tamanho++;
             pokedex = realloc(pokedex, tamanho * sizeof(Pokemon));
 
@@ -1141,16 +1147,10 @@ int main(){
 
         }while(menu_poke != 6);
 
-    }else{
+    }else{              
+  
+        fclose(arq_do_jogador);
         
-        if(arq != NULL){
-            fclose(arq);
-        }
-
-        if(arq_do_jogador != NULL){
-            fclose(arq_do_jogador);
-        }
-
         //abre o arquivo do jogador de acordo com o nickname
         arq_do_jogador = fopen(nickname, "wb");
 
@@ -1168,7 +1168,6 @@ int main(){
                     pokedex[i].lendario, pokedex[i].cor, pokedex[i].altura, pokedex[i].peso,
                     pokedex[i].catch_rate);
         }
-
         fprintf(arq_do_jogador, "\n;");
         fprintf(arq_do_jogador, "\n%d,%d,%d,%d,%d,%d",
                 meu_time[1].integrante, meu_time[2].integrante, meu_time[3].integrante,
@@ -1178,12 +1177,12 @@ int main(){
         for(int i = 1; i < 251; i++){
             fprintf(arq_do_jogador, "\n%d", minha_colecao[i].pokemon);
         }
-    
+
         //fecha o arquivo e libera a memória alocada
         fclose(arq_do_jogador);
         free(pokedex);
     }
-
+    
     return 0;
 
 }
