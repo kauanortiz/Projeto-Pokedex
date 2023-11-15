@@ -26,14 +26,17 @@ typedef struct{
 
 } Colecao;
 
+//Ler_nomes tem como objetivo principal receber e armazenar o nome digitado do jogador
 void ler_nomes(char numero_pokemon[], int size){
 
     setbuf(stdin, NULL);
     fgets(numero_pokemon, size, stdin);
     numero_pokemon[strcspn(numero_pokemon, "\n")] = '\0';
+    setbuf(stdin, NULL);
 
 }
 
+//Inserir_novo tem como objetivo criar um novo pokemon a partir dos dados digitados e armazena-los em um novo compartimento
 void inserir_novo(Pokemon pokedex[], int tamanho){
 
         //inserção do nome
@@ -188,6 +191,7 @@ void inserir_novo(Pokemon pokedex[], int tamanho){
         }
 }
 
+//Listar_todos tem como objetivo listar todos os pokemons de acrodo com seu estilo de busca desejado
 void listar_todos(Pokemon pokedex[], int tamanho){
 
     int opcao;
@@ -314,6 +318,7 @@ void listar_todos(Pokemon pokedex[], int tamanho){
 
 }
 
+//Buscar_pokemon atravez de uma busca simples utilizando string busca o nome do pokemon e exibe seus status
 void buscar_pokemon(Pokemon pokedex[], int tamanho){
 
     int achou;
@@ -357,6 +362,7 @@ void buscar_pokemon(Pokemon pokedex[], int tamanho){
         }
 }
 
+//Alterar_pokemon encontrar um pokemon especifico que voce deseja alterar e caso encontrado fazer as modificações em cada status do pokemon
 void alterar_pokemon(Pokemon pokedex[], int tamanho){
 
     int indice;
@@ -535,6 +541,7 @@ void alterar_pokemon(Pokemon pokedex[], int tamanho){
 
 }
 
+//Excluir_pokemon encontra o indice do pokemon que deseja exluir da POKEDEX e caso foi ou não realizado com sucesso
 void excluir_pokemon(Pokemon pokedex[], int tamanho){
 
     int indice;
@@ -576,6 +583,8 @@ void excluir_pokemon(Pokemon pokedex[], int tamanho){
 
 }
 
+/*nserir_no_time essa é uma função para adicionar a mochila o pokemon desejado, 
+mostra tambem caso o pokemon ja tenha sido add ao time e caso o pokemon não seja valido*/
 void inserir_no_time(Mochila meu_time[], int tamanho){
 
     if(meu_time[1].integrante != 0){
@@ -605,6 +614,7 @@ void inserir_no_time(Mochila meu_time[], int tamanho){
 
 }
 
+//Exibir_time tem objetivo de exibir os pokemons ja cadastrados na mochila
 void exibir_time(Mochila meu_time[], Pokemon pokedex[]){
 
     if(meu_time[1].integrante == 0){
@@ -619,6 +629,7 @@ void exibir_time(Mochila meu_time[], Pokemon pokedex[]){
     }
 }
 
+//Alterar_time verifica o time se foi preenchido, caso tenha sido altera o pokemon especifico
 void alterar_time(Mochila meu_time[], Pokemon pokedex[], int tamanho){
 
     int alterar;
@@ -662,10 +673,11 @@ void alterar_time(Mochila meu_time[], Pokemon pokedex[], int tamanho){
     printf("\n");
 }
 
+//Inserir_coleção adiciona um novo pokemon a sua coleção
 void inserir_colecao(Colecao minha_colecao[], int tamanho, int tamanho_colecao){
 
-    printf("Insira o número do Pokémon que deseja adicionar na coleção: ");
     int novo_numero;
+    printf("Insira o número do Pokémon que deseja adicionar na coleção: ");
 
     scanf("%d",&novo_numero);
 
@@ -697,53 +709,68 @@ void inserir_colecao(Colecao minha_colecao[], int tamanho, int tamanho_colecao){
     }
 
 }
+//Listar_coleção verifica se a minha coleção não esta vazia, se não estiver lista em ordem os pokemons
+void listar_colecao(Colecao minha_colecao[], Pokemon pokedex[], int tamanho_colecao){
 
-void listar_colecao(Colecao minha_colecao[], Pokemon pokedex[]){
+    int preenchido = 0;
 
-    int posicao;
-
-    printf("Seus Pokémon listados são:\n");
-
-    for(posicao = 1; posicao < 251; posicao++){
-
-        if(minha_colecao[posicao].numero_pokemon != 0){
-            printf("Posição [%d]: %d, %s.\n",
-            posicao, minha_colecao[posicao].numero_pokemon, pokedex[minha_colecao[posicao].numero_pokemon].nome);
+    for(int i = 1; i < tamanho_colecao; i++){
+        if(minha_colecao[i].numero_pokemon != 0){
+            preenchido++;
         }
     }
-    printf("\n");
+
+    if(preenchido == 0){
+        printf("Coleção vazia.\n");
+        printf("\n");
+        
+        return;
+
+    }else{
+
+        printf("Seus Pokémon listados são:\n");
+
+        for(int i = 1; i < tamanho_colecao; i++){
+
+            if(minha_colecao[i].numero_pokemon != 0){
+                printf("Posição [%d]: %d, %s.\n",
+                i, minha_colecao[i].numero_pokemon, pokedex[minha_colecao[i].numero_pokemon].nome);
+            }
+        }
+        printf("\n");
+    }
 }
 
-void pesquisar_colecao(Colecao minha_colecao[], Pokemon pokedex[]){
+//Pesquisar_coleção faz uma pesquisa pra ver se encontra o pokemon buscado dentro da coleção 
+void pesquisar_colecao(Colecao minha_colecao[], Pokemon pokedex[], int tamanho_colecao){
 
     char busca_colecao[16];
-    int posicao;
     int achou = 0; //para que as buscas sejam realizadas
 
     printf("Insira o nome do Pokémon que deseja procurar na lista: ");
     ler_nomes(busca_colecao, 15);
+    
+    for(int i = 1; i < tamanho_colecao; i++){
 
-    for(posicao = 1; posicao < 251; posicao++){
+        if(strcmp(busca_colecao,pokedex[minha_colecao[i].numero_pokemon].nome) == 0){
 
-        if(strcmp(busca_colecao,pokedex[minha_colecao[posicao].numero_pokemon].nome) == 0){
-
-            printf("Número: %d.\n",pokedex[minha_colecao[posicao].numero_pokemon].numero);
-            printf("Nome: %s.\n",pokedex[minha_colecao[posicao].numero_pokemon].nome);
-            printf("Tipo 1: %s.\n",pokedex[minha_colecao[posicao].numero_pokemon].tipo1);
-            printf("Tipo 2: %s.\n",pokedex[minha_colecao[posicao].numero_pokemon].tipo2);
-            printf("Total: %d.\n",pokedex[minha_colecao[posicao].numero_pokemon].total);
-            printf("Hp: %d.\n",pokedex[minha_colecao[posicao].numero_pokemon].hp);
-            printf("Ataque: %d.\n",pokedex[minha_colecao[posicao].numero_pokemon].attack);
-            printf("Defesa: %d.\n",pokedex[minha_colecao[posicao].numero_pokemon].defense);
-            printf("Ataque especial: %d.\n",pokedex[minha_colecao[posicao].numero_pokemon].sp_attack);
-            printf("Defesa especial: %d.\n",pokedex[minha_colecao[posicao].numero_pokemon].sp_defense);
-            printf("Velocidade: %d.\n",pokedex[minha_colecao[posicao].numero_pokemon].speed);
-            printf("Geração: %d°.\n",pokedex[minha_colecao[posicao].numero_pokemon].geracao);
-            printf("Lendário (0 = não e 1 = sim): %d.\n",pokedex[minha_colecao[posicao].numero_pokemon].lendario);
-            printf("Cor: %s.\n",pokedex[minha_colecao[posicao].numero_pokemon].cor);
-            printf("Altura (metros): %.2f.\n",pokedex[minha_colecao[posicao].numero_pokemon].altura);
-            printf("Peso (kg): %.2f.\n",pokedex[minha_colecao[posicao].numero_pokemon].peso);
-            printf("Taxa de captura: %d.\n",pokedex[minha_colecao[posicao].numero_pokemon].catch_rate);
+            printf("Número: %d.\n",pokedex[minha_colecao[i].numero_pokemon].numero);
+            printf("Nome: %s.\n",pokedex[minha_colecao[i].numero_pokemon].nome);
+            printf("Tipo 1: %s.\n",pokedex[minha_colecao[i].numero_pokemon].tipo1);
+            printf("Tipo 2: %s.\n",pokedex[minha_colecao[i].numero_pokemon].tipo2);
+            printf("Total: %d.\n",pokedex[minha_colecao[i].numero_pokemon].total);
+            printf("Hp: %d.\n",pokedex[minha_colecao[i].numero_pokemon].hp);
+            printf("Ataque: %d.\n",pokedex[minha_colecao[i].numero_pokemon].attack);
+            printf("Defesa: %d.\n",pokedex[minha_colecao[i].numero_pokemon].defense);
+            printf("Ataque especial: %d.\n",pokedex[minha_colecao[i].numero_pokemon].sp_attack);
+            printf("Defesa especial: %d.\n",pokedex[minha_colecao[i].numero_pokemon].sp_defense);
+            printf("Velocidade: %d.\n",pokedex[minha_colecao[i].numero_pokemon].speed);
+            printf("Geração: %d°.\n",pokedex[minha_colecao[i].numero_pokemon].geracao);
+            printf("Lendário (0 = não e 1 = sim): %d.\n",pokedex[minha_colecao[i].numero_pokemon].lendario);
+            printf("Cor: %s.\n",pokedex[minha_colecao[i].numero_pokemon].cor);
+            printf("Altura (metros): %.2f.\n",pokedex[minha_colecao[i].numero_pokemon].altura);
+            printf("Peso (kg): %.2f.\n",pokedex[minha_colecao[i].numero_pokemon].peso);
+            printf("Taxa de captura: %d.\n",pokedex[minha_colecao[i].numero_pokemon].catch_rate);
             printf("\n");
 
             achou++;
@@ -757,43 +784,104 @@ void pesquisar_colecao(Colecao minha_colecao[], Pokemon pokedex[]){
 
 }
 
-void alterar_colecao(Colecao minha_colecao[]){
+//Alterar_coleção verifica se está preenchida a minha_coleção e caso esteja permite alterar um pokemon especifico
+void alterar_colecao(Colecao minha_colecao[], int tamanho, int tamanho_colecao){
 
-    int posicao;
+    int busca;
+    int novo_numero;
+    int achou = 0;
+    int preenchido = 0;
 
-    printf("Insira a posição da coleção que deseja alterar: ");
-    scanf("%d",&posicao);
-
-    if(minha_colecao[posicao].numero_pokemon == 0){
-        printf("Posição vazia.\n");
-        printf("\n");
-
-    }else{
-        printf("Insira o número do novo Pokémon: ");
-        scanf("%d",&minha_colecao[posicao].numero_pokemon);
-        printf("Pokémon alterado com sucesso.\n");
-        printf("\n");
+    for(int i = 1; i < tamanho_colecao; i++){
+        if(minha_colecao[i].numero_pokemon != 0){
+            preenchido++;
+        }
     }
 
+    if(preenchido == 0){
+        printf("Coleção vazia.\n");
+        printf("\n");
+        
+        return;
+
+    }else{
+
+        printf("Insira o número do Pokémon da coleção que deseja alterar: ");
+        scanf("%d",&busca);
+
+        for(int i = 1; i < tamanho_colecao; i++){
+            
+            if(minha_colecao[i].numero_pokemon == busca){
+
+                printf("Insira o número do novo Pokémon: ");
+                scanf("%d",&novo_numero);
+
+                while(novo_numero <= 0 || novo_numero > tamanho - 1){
+                    printf("Pokémon inválido. Insira um valor entre 1 e %d: ",tamanho - 1);
+                    scanf("%d",&novo_numero);
+                }
+
+                achou++;
+
+                minha_colecao[i].numero_pokemon = novo_numero;
+                printf("Pokémon alterado com sucesso.\n");
+                printf("\n");
+
+                break;
+
+            }        
+        }
+        if(achou == 0){
+
+                printf("Pokémon indisponível na coleção.\n");
+
+        }
+    }
 }
 
-void excluir_colecao(Colecao minha_colecao[]){
+//Excluir_coleção verifica para ver se a coleção nao esta vazia e caso não esteja permite excluir um pokemon da coleção
+void excluir_colecao(Colecao minha_colecao[], int tamanho_colecao){
     
-    int posicao;
+    int busca;
+    int achou = 0;
+    int preenchido = 0;
 
-    printf("Insira a posição da coleção que deseja excluir: ");
-    scanf("%d",&posicao);
-
-    if(minha_colecao[posicao].numero_pokemon == 0){
-        printf("Posição vazia.\n");
-        printf("\n");
-
-    }else{
-        minha_colecao[posicao].numero_pokemon = 0;
-        printf("Pokémon excluído com sucesso.\n");
-        printf("\n");
+    for(int i = 1; i < tamanho_colecao; i++){
+        if(minha_colecao[i].numero_pokemon != 0){
+            preenchido++;
+        }
     }
 
+    if(preenchido == 0){
+        printf("Coleção vazia.\n");
+        printf("\n");
+        
+        return;
+
+    }else{
+
+        printf("Insira o número do Pokémon da coleção que deseja excluir: ");
+        scanf("%d",&busca);
+
+        for(int i = 1; i < tamanho_colecao; i++){
+            
+            if(minha_colecao[i].numero_pokemon == busca){
+                minha_colecao[i].numero_pokemon = 0;
+                achou++;
+            
+                printf("Pokémon excluído com sucesso.\n");
+                printf("\n");
+                
+            }           
+        }
+        
+        if(achou == 0){
+            
+            printf("Pokémon indisponível na coleção.\n");
+            
+        }
+    }
+    
 }
 
 /*Deverá permitir cadastrar
@@ -802,7 +890,7 @@ Essa relação deve aumentar e diminuir dinamicamente.*/
 int main(){
 
     int main_menu, menu_jogo, menu_poke, menu_mochila, menu_colecao; //opções criadas para manuseamento dos switches
-    int tamanho = 722, tamanho_colecao = 6; //tamanho original de Pokémon na Pokédex + linha do cabeçalho
+    int tamanho = 722, tamanho_colecao = 11; //tamanho original de Pokémon na Pokédex + linha do cabeçalho
     char nickname[31]; //armazena o nickname do jogador
     char c; //variável que auxilia na contagem de linhas do novo arquivo
 
@@ -815,22 +903,13 @@ int main(){
     
 
     Mochila meu_time[7]; //armazena até 6 Pokémon no time
-    Colecao* minha_colecao = (Colecao*)malloc(tamanho_colecao * sizeof(Colecao)); //armazena os Pokémon na coleção
+    Colecao* minha_colecao = (Colecao*)calloc(tamanho_colecao, sizeof(Colecao)); //armazena os Pokémon na coleção
+    
 
     if(minha_colecao == NULL){
         printf("Erro: Memória insuficiente!\n");
         exit(1);
-    }
-    
-
-    //inicia os integrantes do time como 0
-    for(int i = 0; i < 7; i++){
-        meu_time[i].integrante = 0;
-    }
-    for(int i = 1; i < tamanho_colecao; i++){
-        minha_colecao[i].numero_pokemon = 0;
-    }
-    
+    } 
 
     //cria dois arquivos, um para ler a Pokédex, e um para armazenar o progresso do jogador
     FILE* arq;
@@ -850,6 +929,16 @@ int main(){
 
     //se opção 1 for escolhida, abre o arquivo .csv e cria um novo arquivo
     if(main_menu == 1){
+    
+    //colocar dentro de main_menu == 1
+    //inicia os integrantes do time como 0
+    for(int i = 0; i < 7; i++){
+        meu_time[i].integrante = 0;
+    }
+    
+    for(int i = 1; i < tamanho_colecao; i++){
+        minha_colecao[i].numero_pokemon = 0;
+    }
 
         arq = fopen("pokedex.csv", "r");
 
@@ -931,17 +1020,20 @@ int main(){
         &meu_time[1].integrante, &meu_time[2].integrante, &meu_time[3].integrante,
         &meu_time[4].integrante, &meu_time[5].integrante, &meu_time[6].integrante);
 
-        tamanho_colecao = 1;
-        while((c = fgetc(arq_do_jogador)) != ';'){
-    
-        //se o ponteiro for igual a \n, uma linha é contabilizada
+        int i = 1;
+        tamanho_colecao = 0;
+
+        while ((c = fgetc(arq_do_jogador)) != ';') {
             if(c == '\n'){
-                tamanho++;
-            }       
-        }
-        printf("%d\n",tamanho_colecao);
-        for(int i = 1; i < 251; i++){
-            fscanf(arq_do_jogador,"%d",&minha_colecao[i].numero_pokemon);
+                tamanho_colecao++;
+            }
+        // Verifica se o caractere é um número
+            if (c >= '0' && c <= '9') {
+                //Se sim, o caractere volta no arquivo e le o número
+                ungetc(c, arq_do_jogador);
+                fscanf(arq_do_jogador, "%d", &minha_colecao[i].numero_pokemon);
+                i++;
+            }
         }
 
     //se opção 3 for escolhida, fecha o programa
@@ -1042,11 +1134,28 @@ int main(){
             switch(menu_colecao){
                 
                 case 1: //inserir na coleção
-                //Ajusta o tamanho da coleção caso tenha usado todos espaços de 
-                if (minha_colecao[tamanho_colecao - 1].numero_pokemon != 0){
-                    tamanho_colecao += 2;
-                    minha_colecao = realloc(minha_colecao, tamanho_colecao * sizeof(Colecao));
+                
+            if (minha_colecao[tamanho_colecao - 1].numero_pokemon != 0) {
+            // Calcula o novo tamanho da coleção
+            int novo_tamanho = tamanho_colecao + 10;
+
+                // Realoca a memória para o novo tamanho da coleção
+                minha_colecao = realloc(minha_colecao, novo_tamanho * sizeof(Colecao));
+
+                if (minha_colecao == NULL) {
+                    printf("Erro ao realocar memória para a coleção.\n");
+                    exit(1);
                 }
+
+                // Inicializa os novos espaços com 0
+                for (int i = tamanho_colecao; i < novo_tamanho; i++) {
+                    minha_colecao[i].numero_pokemon = 0;
+                }
+
+                // Atualiza o tamanho da coleção
+                tamanho_colecao = novo_tamanho;
+            }
+
                 
                 inserir_colecao(minha_colecao, tamanho, tamanho_colecao);
 
@@ -1055,28 +1164,28 @@ int main(){
 
                 case 2: //listar
 
-                listar_colecao(minha_colecao, pokedex);
+                listar_colecao(minha_colecao, pokedex, tamanho_colecao);
 
                 break;
 
 
                 case 3: //pesquisar
 
-                pesquisar_colecao(minha_colecao, pokedex);           
+                pesquisar_colecao(minha_colecao, pokedex, tamanho_colecao);           
 
                 break;
 
 
                 case 4: //alterar
 
-                alterar_colecao(minha_colecao);
+                alterar_colecao(minha_colecao, tamanho, tamanho_colecao);
 
                 break;
 
 
                 case 5: //excluir
 
-                excluir_colecao(minha_colecao);
+                excluir_colecao(minha_colecao, tamanho_colecao);
                 
                 break;
 
@@ -1193,6 +1302,7 @@ int main(){
         //fecha o arquivo e libera a memória alocada
         fclose(arq_do_jogador);
         free(pokedex);
+        free(minha_colecao);
     }
     
     return 0;
