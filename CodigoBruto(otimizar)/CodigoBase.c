@@ -677,6 +677,7 @@ void alterar_time(Mochila meu_time[], Pokemon pokedex[], int tamanho){
 void inserir_colecao(Colecao minha_colecao[], int tamanho, int tamanho_colecao){
 
     int novo_numero;
+
     printf("Insira o número do Pokémon que deseja adicionar na coleção: ");
 
     scanf("%d",&novo_numero);
@@ -686,7 +687,7 @@ void inserir_colecao(Colecao minha_colecao[], int tamanho, int tamanho_colecao){
         scanf("%d", &novo_numero);
     }
 
-    // Verifica se o novo número já existe na coleção
+    //verifica se o novo número já existe na coleção
     int numero_existente = 0;
     for(int i = 0; i < tamanho_colecao; i++){
         if(minha_colecao[i].numero_pokemon == novo_numero){
@@ -698,7 +699,8 @@ void inserir_colecao(Colecao minha_colecao[], int tamanho, int tamanho_colecao){
     if(numero_existente){
         printf("Esse Pokémon já está na coleção.\n");
     }else{
-        // Encontra um espaço vazio na coleção para adicionar o novo Pokémon
+
+        //encontra um espaço vazio na coleção para adicionar o novo Pokémon
         for(int i = 0; i < tamanho_colecao; i++){
             if(minha_colecao[i].numero_pokemon == 0){
                 minha_colecao[i].numero_pokemon = novo_numero;
@@ -709,6 +711,7 @@ void inserir_colecao(Colecao minha_colecao[], int tamanho, int tamanho_colecao){
     }
 
 }
+
 //Listar_coleção verifica se a minha coleção não esta vazia, se não estiver lista em ordem os pokemons
 void listar_colecao(Colecao minha_colecao[], Pokemon pokedex[], int tamanho_colecao){
 
@@ -884,6 +887,106 @@ void excluir_colecao(Colecao minha_colecao[], int tamanho_colecao){
     
 }
 
+void salvar_progresso(FILE *arq_do_jogador, Pokemon *pokedex, Colecao *minha_colecao, Mochila meu_time[], int tamanho, int tamanho_colecao, char nickname[]){
+
+    fclose(arq_do_jogador);
+        
+    //abre o arquivo do jogador de acordo com o nickname
+    arq_do_jogador = fopen(nickname, "wb");
+
+    if(arq_do_jogador == NULL){
+            printf("Erro na abertura do arquivo do jogador.\n");
+            exit(1);
+    }
+
+    fprintf(arq_do_jogador, "numero ,nome           ,tipo1      ,tipo2      ,total ,hp  ,ataque ,defesa ,ataque_especial ,defesa_especial ,velocidade ,geracao ,lendario ,cor        ,altura_m ,peso_kg ,taxa_captura");
+    
+    for(int i = 1; i < tamanho; i++) {
+        fprintf(arq_do_jogador, "\n%7d,%15s,%11s,%11s,%6d,%4d,%7d,%7d,%16d,%16d,%11d,%8d,%9d,%11s, %7.2f , %6.2f ,%12d",
+                pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
+                pokedex[i].total, pokedex[i].hp, pokedex[i].attack, pokedex[i].defense,
+                pokedex[i].sp_attack, pokedex[i].sp_defense, pokedex[i].speed, pokedex[i].geracao,
+                pokedex[i].lendario, pokedex[i].cor, pokedex[i].altura, pokedex[i].peso,
+                pokedex[i].catch_rate);
+    }
+    
+    fprintf(arq_do_jogador, "\n;");
+    
+    fprintf(arq_do_jogador, "\n%d,%d,%d,%d,%d,%d",
+            meu_time[1].integrante, meu_time[2].integrante, meu_time[3].integrante,
+            meu_time[4].integrante, meu_time[5].integrante, meu_time[6].integrante);
+
+    for(int i = 1; i < tamanho_colecao; i++) {
+        fprintf(arq_do_jogador, "\n%d", minha_colecao[i].numero_pokemon);
+    }
+
+    fprintf(arq_do_jogador, "\n;");
+
+}
+
+void exportar_csv(Pokemon *pokedex, Colecao *minha_colecao, Mochila meu_time[], int tamanho, int tamanho_colecao){
+
+    FILE* novo_csv;
+    char nome_csv[21];
+    int exportar_csv;
+
+    printf("Deseja exportar uma cópia do arquivo no formato .csv?\n");
+    printf("1 - Sim.\n2 - Não.\n");
+    printf("Insira sua opção: ");
+    scanf("%d",&exportar_csv);
+
+    while(exportar_csv < 1 || exportar_csv > 2){
+        printf("Opção inválida. Insira 1 ou 2.\n");
+    }
+
+    if(exportar_csv == 1){
+
+        printf("Insira o nome desejado para o arquivo: ");
+        ler_nomes(nome_csv, 20);
+        strcat(nome_csv, ".csv");
+        novo_csv = fopen(nome_csv, "w");
+        printf("\n");
+
+        fprintf(novo_csv, "numero ,nome           ,tipo1      ,tipo2      ,total ,hp  ,ataque ,defesa ,ataque_especial ,defesa_especial ,velocidade ,geracao ,lendario ,cor        ,altura_m ,peso_kg ,taxa_captura");
+        for(int i = 1; i < tamanho; i++){
+            fprintf(novo_csv, "\n%7d,%15s,%11s,%11s,%6d,%4d,%7d,%7d,%16d,%16d,%11d,%8d,%9d,%11s, %7.2f , %6.2f ,%12d",
+                    pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
+                    pokedex[i].total, pokedex[i].hp, pokedex[i].attack, pokedex[i].defense,
+                    pokedex[i].sp_attack, pokedex[i].sp_defense, pokedex[i].speed, pokedex[i].geracao,
+                    pokedex[i].lendario, pokedex[i].cor, pokedex[i].altura, pokedex[i].peso,
+                    pokedex[i].catch_rate);
+        }
+        fprintf(novo_csv,"\n");
+        fprintf(novo_csv,"\nMeu time:");
+
+        for(int i = 1; i < 7; i++){
+            fprintf(novo_csv, "\n[%d]: %d, %s.",
+            i, meu_time[i].integrante, pokedex[meu_time[i].integrante].nome);
+        }
+
+        fprintf(novo_csv,"\n");
+        fprintf(novo_csv, "\nMinha coleção: ");
+        for(int i = 1; i < tamanho_colecao; i++){
+            fprintf(novo_csv, "\n[%d]: %d, %s.",
+            i, minha_colecao[i].numero_pokemon, pokedex[minha_colecao[i].numero_pokemon].nome);
+        }
+            fclose(novo_csv);
+            free(pokedex);
+            free(minha_colecao);
+
+            printf("Arquivo criado com sucesso!\n");
+            printf("\n");
+
+            fclose(novo_csv);
+
+    }else{
+
+        //fecha o arquivo e libera a memória alocada
+        free(pokedex);
+        free(minha_colecao);
+
+    }
+}
 /*Deverá permitir cadastrar
 (inserir/listar/pesquisar/alterar/excluir) os Pokémons disponíveis para serem capturados.
 Essa relação deve aumentar e diminuir dinamicamente.*/
@@ -894,26 +997,18 @@ int main(){
     char nickname[31]; //armazena o nickname do jogador
     char c; //variável que auxilia na contagem de linhas do novo arquivo
 
-    Pokemon* pokedex = (Pokemon*)malloc(tamanho * sizeof(Pokemon));
-
-    if(pokedex == NULL){
-            printf("Erro: Memória insuficiente!\n");
-            exit(1);
-    }
-    
-
-    Mochila meu_time[7]; //armazena até 6 Pokémon no time
-    Colecao* minha_colecao = (Colecao*)calloc(tamanho_colecao, sizeof(Colecao)); //armazena os Pokémon na coleção
-    
-
-    if(minha_colecao == NULL){
-        printf("Erro: Memória insuficiente!\n");
-        exit(1);
-    } 
-
     //cria dois arquivos, um para ler a Pokédex, e um para armazenar o progresso do jogador
     FILE* arq;
     FILE* arq_do_jogador;
+
+    Pokemon* pokedex = (Pokemon*)malloc(tamanho * sizeof(Pokemon));
+    Colecao* minha_colecao = (Colecao*)malloc(tamanho_colecao * sizeof(Colecao)); //armazena os Pokémon na coleção
+    Mochila meu_time[7]; //armazena até 6 Pokémon no time
+
+    if (pokedex == NULL || minha_colecao == NULL) {
+        printf("Erro: Memória insuficiente!\n");
+        exit(1);
+    }
 
     //exibe o menu principal
     printf("\nSeja bem-vindo treinador Pokémon, você deseja iniciar uma nova jornada ou continuar de onde parou? ");
@@ -1095,9 +1190,9 @@ int main(){
 
             //permite alterar os membros do time
             case 3:
+            
                 printf("%d\n",meu_time[1].integrante);
                 alterar_time(meu_time, pokedex, tamanho);
-                printf("%d\n",meu_time[1].integrante);
 
             break;
 
@@ -1135,28 +1230,19 @@ int main(){
                 
                 case 1: //inserir na coleção
                 
-            if (minha_colecao[tamanho_colecao - 1].numero_pokemon != 0) {
-            // Calcula o novo tamanho da coleção
-            int novo_tamanho = tamanho_colecao + 10;
+                if(minha_colecao[tamanho_colecao - 1].numero_pokemon != 0){
+                    minha_colecao = realloc(minha_colecao, (tamanho_colecao + 10) * sizeof(Colecao));
 
-                // Realoca a memória para o novo tamanho da coleção
-                minha_colecao = realloc(minha_colecao, novo_tamanho * sizeof(Colecao));
-
-                if (minha_colecao == NULL) {
-                    printf("Erro ao realocar memória para a coleção.\n");
-                    exit(1);
-                }
-
-                // Inicializa os novos espaços com 0
-                for (int i = tamanho_colecao; i < novo_tamanho; i++) {
+                //inicializa os novos espaços com 0
+                for(int i = tamanho_colecao; i < tamanho_colecao + 10; i++){
                     minha_colecao[i].numero_pokemon = 0;
                 }
 
                 // Atualiza o tamanho da coleção
-                tamanho_colecao = novo_tamanho;
-            }
+                tamanho_colecao += 10;
 
-                
+                }
+               
                 inserir_colecao(minha_colecao, tamanho, tamanho_colecao);
 
                 break;
@@ -1268,41 +1354,18 @@ int main(){
 
         }while(menu_poke != 6);
 
-    }else{              
-  
-        fclose(arq_do_jogador);
-        
-        //abre o arquivo do jogador de acordo com o nickname
-        arq_do_jogador = fopen(nickname, "wb");
+    }else{            
 
-        if(arq_do_jogador == NULL){
-            printf("Erro na abertura do arquivo do jogador.\n");
-            exit(1);
+        if(arq_do_jogador != NULL){
+
+            salvar_progresso(arq_do_jogador, pokedex, minha_colecao, meu_time, tamanho, tamanho_colecao, nickname);
+            fclose(arq_do_jogador);
+            
+            exportar_csv(pokedex, minha_colecao, meu_time, tamanho, tamanho_colecao);
+            free(pokedex);
+            free(minha_colecao);
         }
 
-        fprintf(arq_do_jogador, "numero ,nome           ,tipo1      ,tipo2      ,total ,hp  ,ataque ,defesa ,ataque_especial ,defesa_especial ,velocidade ,geracao ,lendario ,cor        ,altura_m ,peso_kg ,taxa_captura");
-        for(int i = 1; i < tamanho; i++){
-            fprintf(arq_do_jogador, "\n%7d,%15s,%11s,%11s,%6d,%4d,%7d,%7d,%16d,%16d,%11d,%8d,%9d,%11s, %7.2f , %6.2f ,%12d",
-                    pokedex[i].numero, pokedex[i].nome, pokedex[i].tipo1, pokedex[i].tipo2,
-                    pokedex[i].total, pokedex[i].hp, pokedex[i].attack, pokedex[i].defense,
-                    pokedex[i].sp_attack, pokedex[i].sp_defense, pokedex[i].speed, pokedex[i].geracao,
-                    pokedex[i].lendario, pokedex[i].cor, pokedex[i].altura, pokedex[i].peso,
-                    pokedex[i].catch_rate);
-        }
-        fprintf(arq_do_jogador, "\n;");
-        fprintf(arq_do_jogador, "\n%d,%d,%d,%d,%d,%d",
-                meu_time[1].integrante, meu_time[2].integrante, meu_time[3].integrante,
-                meu_time[4].integrante, meu_time[5].integrante, meu_time[6].integrante);
-
-        for(int i = 1; i < tamanho_colecao; i++){
-            fprintf(arq_do_jogador, "\n%d", minha_colecao[i].numero_pokemon);
-        }
-        fprintf(arq_do_jogador, "\n;");
-
-        //fecha o arquivo e libera a memória alocada
-        fclose(arq_do_jogador);
-        free(pokedex);
-        free(minha_colecao);
     }
     
     return 0;
