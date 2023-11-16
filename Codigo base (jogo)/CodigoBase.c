@@ -993,20 +993,22 @@ Essa relação deve aumentar e diminuir dinamicamente.*/
 int main(){
 
     int main_menu, menu_jogo, menu_poke, menu_mochila, menu_colecao; //opções criadas para manuseamento dos switches
-    int tamanho = 722, tamanho_colecao = 11; //tamanho original de Pokémon na Pokédex + linha do cabeçalho
+    int tamanho = 722, tamanho_colecao = 21; //tamanho original de Pokémon na Pokédex + linha do cabeçalho e tamanho da coleção
     char nickname[31]; //armazena o nickname do jogador
     char c; //variável que auxilia na contagem de linhas do novo arquivo
+    int i = 1; //usado para recalcular as linhas do arquivo
 
     //cria dois arquivos, um para ler a Pokédex, e um para armazenar o progresso do jogador
     FILE* arq;
     FILE* arq_do_jogador;
 
-    Pokemon* pokedex = (Pokemon*)malloc(tamanho * sizeof(Pokemon));
-    Colecao* minha_colecao = (Colecao*)malloc(tamanho_colecao * sizeof(Colecao)); //armazena os Pokémon na coleção
+    Pokemon* pokedex = (Pokemon*)malloc(tamanho * sizeof(Pokemon)); //aloca a memória que será utilizada na Pokédex de maneira dinâmica
+    Colecao* minha_colecao = (Colecao*)malloc(tamanho_colecao * sizeof(Colecao)); //aloca a memória que será utilizada na Coleção de maneira dinâmica
     Mochila meu_time[7]; //armazena até 6 Pokémon no time
 
-    if (pokedex == NULL || minha_colecao == NULL) {
-        printf("Erro: Memória insuficiente!\n");
+    //verifica se as alocações dinâmicas foram realizadas corretamente
+    if(pokedex == NULL || minha_colecao == NULL){
+        printf("Memória insuficiente!\n");
         exit(1);
     }
 
@@ -1056,6 +1058,7 @@ int main(){
          &pokedex[i].catch_rate);
     }
 
+    //fecha o arquivo que abre a pokedex.csv
     fclose(arq);
 
         printf("Insira seu nickname: ");
@@ -1115,7 +1118,6 @@ int main(){
         &meu_time[1].integrante, &meu_time[2].integrante, &meu_time[3].integrante,
         &meu_time[4].integrante, &meu_time[5].integrante, &meu_time[6].integrante);
 
-        int i = 1;
         tamanho_colecao = 0;
 
         while ((c = fgetc(arq_do_jogador)) != ';') {
@@ -1191,7 +1193,6 @@ int main(){
             //permite alterar os membros do time
             case 3:
             
-                printf("%d\n",meu_time[1].integrante);
                 alterar_time(meu_time, pokedex, tamanho);
 
             break;
@@ -1231,15 +1232,15 @@ int main(){
                 case 1: //inserir na coleção
                 
                 if(minha_colecao[tamanho_colecao - 1].numero_pokemon != 0){
-                    minha_colecao = realloc(minha_colecao, (tamanho_colecao + 10) * sizeof(Colecao));
+                    minha_colecao = realloc(minha_colecao, (tamanho_colecao + 20) * sizeof(Colecao));
 
                 //inicializa os novos espaços com 0
-                for(int i = tamanho_colecao; i < tamanho_colecao + 10; i++){
+                for(int i = tamanho_colecao; i < tamanho_colecao + 20; i++){
                     minha_colecao[i].numero_pokemon = 0;
                 }
 
                 // Atualiza o tamanho da coleção
-                tamanho_colecao += 10;
+                tamanho_colecao += 20;
 
                 }
                
@@ -1356,6 +1357,7 @@ int main(){
 
     }else{            
 
+        //se o arquivo do jogador for diferente de NULL, salva o progresso, exibe uma opção de exportar csv, fecha os arquivos e libera a memória alocada
         if(arq_do_jogador != NULL){
 
             salvar_progresso(arq_do_jogador, pokedex, minha_colecao, meu_time, tamanho, tamanho_colecao, nickname);
