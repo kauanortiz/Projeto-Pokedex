@@ -8,15 +8,20 @@ Obs2: O código só está rodando no sistema operacional Linux.
 2 - Logo após, serão exibidas 3 opções ao usuário:
 
 (1) - Novo jogo: pede ao usuário que insira seu nickname e cria um novo jogo.
+
 (2) - Carregar jogo: pede ao usuário que insira seu nickname e reabre um arquivo com o mesmo nome do nickname inserido pelo jogador, se este não existir,
 o programa fecha e exibe uma mensagem de falha.
+
 (3) - Sair: sai do jogo.
 
 3 - Em seguida, é exibido um menu com opções de manipulação dos dados da Pokédex, Coleção e Mochila. As opções são:
 
 (1) - Mochila.
+
 (2) - Coleção(PC).
+
 (3) - Pokédex.
+
 (4) - Sair.
 
 4 - Após o usuário modificar e adicionar dados e clicar na opção sair, é perguntado ao usuário se o mesmo deseja obter uma cópia dos dados no formato .csv,
