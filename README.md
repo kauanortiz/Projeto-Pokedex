@@ -11,8 +11,9 @@ Obs2: O código só está rodando no sistema operacional Linux.
 
     Novo jogo: pede ao usuário que insira seu nickname e cria um novo jogo.
 
-    Carregar jogo: pede ao usuário que insira seu nickname e reabre um arquivo com o mesmo nome do nickname inserido
-    pelo jogador, se este não existir, o programa fecha e exibe uma mensagem de falha.
+    Carregar jogo: pede ao usuário que insira seu nickname e reabre um arquivo com o mesmo
+    nome do nickname inserido pelo jogador, se este não existir, o programa fecha
+    e exibe uma mensagem de falha.
 
     Sair: sai do jogo.
 
