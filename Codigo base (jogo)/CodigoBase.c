@@ -674,18 +674,23 @@ void alterar_time(Mochila meu_time[], Pokemon pokedex[], int tamanho){
 }
 
 //Inserir_coleção adiciona um novo pokemon a sua coleção
-void inserir_colecao(Colecao minha_colecao[], int tamanho, int tamanho_colecao){
+void inserir_colecao(Colecao minha_colecao[], Pokemon pokedex[], int tamanho, int tamanho_colecao){
 
     int novo_numero;
+    int achou = 0;
 
     printf("Insira o número do Pokémon que deseja adicionar na coleção: ");
-
     scanf("%d",&novo_numero);
 
-    while(novo_numero <= 0 || novo_numero > tamanho - 1){
+    for(int i = 1; i < tamanho; i++){
+        if(novo_numero == pokedex[i].numero){
+            achou++;
+        }
+    }
+    if(achou == 0){
         printf("Pokémon inválido. Insira um valor válido: ");
         scanf("%d", &novo_numero);
-    }
+    }else{
 
     //verifica se o novo número já existe na coleção
     int numero_existente = 0;
@@ -708,6 +713,7 @@ void inserir_colecao(Colecao minha_colecao[], int tamanho, int tamanho_colecao){
                 break;
             }
         }
+    }
     }
 
 }
@@ -960,9 +966,13 @@ void exportar_csv(Pokemon *pokedex, Colecao *minha_colecao, Mochila meu_time[], 
             printf("Arquivo criado com sucesso!\n");
             printf("\n");
 
+            printf("Fim do programa.\n");
+            printf("\n");
+
     }else{
 
         printf("Fim do programa.\n");
+        printf("\n");
 
     }
 
@@ -979,7 +989,6 @@ int main(){
     int main_menu, menu_jogo, menu_poke, menu_mochila, menu_colecao; //opções criadas para manuseamento dos switches
     int tamanho = 722, tamanho_colecao = 6; //tamanho original de Pokémon na Pokédex + linha do cabeçalho e tamanho da coleção
     char nickname[31]; //armazena o nickname do jogador
-
 
     //cria dois arquivos, um para ler a Pokédex, e um para armazenar o progresso do jogador
     FILE* arq;
@@ -1071,6 +1080,7 @@ int main(){
         //realoca a memória com base nas linhas recalculadas
         pokedex = realloc(pokedex, tamanho * sizeof(Pokemon));
         minha_colecao = realloc(minha_colecao, tamanho_colecao * sizeof(Colecao));
+
         if(pokedex == NULL || minha_colecao == NULL){
 
             printf("Erro na realocação de memória.\n");
@@ -1193,7 +1203,7 @@ int main(){
 
                 }
                
-                inserir_colecao(minha_colecao, tamanho, tamanho_colecao);
+                inserir_colecao(minha_colecao, pokedex, tamanho, tamanho_colecao);
 
                 break;
 
