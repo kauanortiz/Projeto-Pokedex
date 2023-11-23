@@ -1,7 +1,11 @@
 # Projeto-Pokedex
 Repositório criado para o desenvolvimento do projeto do Jogo Pokémon.
 
-1 - Para rodar o jogo, o usuário necessita abrir a pasta "Codigo Base (jogo)" e rodar o arquivo CodigoBase.c; Obs: O arquivo pokedex.csv necessita estar incluso na pasta "output", que é gerada logo após o arquivo CodigoBase.c ser rodado pela primeira vez. Obs2: O código só está rodando no sistema operacional Linux.
+1 - Para rodar o jogo, o usuário necessita abrir a pasta "Codigo Base (jogo)" e rodar o arquivo CodigoBase.c;
+
+Obs: O arquivo pokedex.csv necessita estar incluso na pasta "output", que é gerada logo após o arquivo CodigoBase.c ser rodado pela primeira vez.
+
+Obs2: O código só está rodando no sistema operacional Linux.
 
 2 - Logo após, serão exibidas 3 opções ao usuário:
 
