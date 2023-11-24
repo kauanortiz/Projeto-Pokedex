@@ -905,8 +905,8 @@ void salvar_progresso(FILE *arq_do_jogador, Pokemon *pokedex, Colecao *minha_col
             exit(1);
     }
     
-    fwrite(&tamanho, sizeof(int), 4, arq_do_jogador);
-    fwrite(&tamanho_colecao, sizeof(int), 4, arq_do_jogador);
+    fwrite(&tamanho, sizeof(int), 1, arq_do_jogador);
+    fwrite(&tamanho_colecao, sizeof(int), 1, arq_do_jogador);
     fwrite(pokedex, sizeof(Pokemon), tamanho, arq_do_jogador);
     fwrite(meu_time, sizeof(Mochila), 7, arq_do_jogador);
     fwrite(minha_colecao, sizeof(Colecao), tamanho_colecao, arq_do_jogador);
@@ -1074,8 +1074,8 @@ int main(){
         }
         printf("\n");
 
-        fread(&tamanho, sizeof(int), 4, arq_do_jogador);
-        fread(&tamanho_colecao, sizeof(int), 4, arq_do_jogador);
+        fread(&tamanho, sizeof(int), 1, arq_do_jogador);
+        fread(&tamanho_colecao, sizeof(int), 1, arq_do_jogador);
 
         //realoca a memória com base nas linhas recalculadas
         pokedex = realloc(pokedex, tamanho * sizeof(Pokemon));
