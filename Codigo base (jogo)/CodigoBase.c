@@ -588,29 +588,29 @@ mostra tambem caso o pokemon ja tenha sido add ao time e caso o pokemon não sej
 void inserir_no_time(Mochila meu_time[], int tamanho){
 
     if(meu_time[1].integrante != 0){
-                    printf("Time já preenchido.\n");
-                    printf("\n");
+        printf("Time já preenchido.\n");
+        printf("\n");
 
-                    return;
-                }
+        return;
+    }
 
-                for(int i = 1; i < 7; i++){
-                    printf("Insira o número do %d° Pokémon do time: ",i);
-                    scanf("%d",&meu_time[i].integrante);
+    for(int i = 1; i < 7; i++){
+        printf("Insira o número do %d° Pokémon do time: ",i);
+        scanf("%d",&meu_time[i].integrante);
 
-                    while(meu_time[i].integrante == meu_time[i - 1].integrante ){
-                        printf("Pokémon já adicionado ao time. Insira outro: ");
-                        scanf("%d",&meu_time[i].integrante);
-                        printf("\n");
-                    }
-                    while(meu_time[i].integrante <= 0 || meu_time[i].integrante > tamanho){
-                        printf("Pokémon inválido. Insira um número válido: ");
-                        scanf("%d",&meu_time[i].integrante);
-                        printf("\n");
-                    }
-                }
+        while(meu_time[i].integrante == meu_time[i - 1].integrante ){
+            printf("Pokémon já adicionado ao time. Insira outro: ");
+            scanf("%d",&meu_time[i].integrante);
+            printf("\n");
+        }
+        while(meu_time[i].integrante <= 0 || meu_time[i].integrante > tamanho){
+            printf("Pokémon inválido. Insira um número válido: ");
+            scanf("%d",&meu_time[i].integrante);
+            printf("\n");
+        }
+    }
 
-                printf("\n");
+    printf("\n");
 
 }
 
