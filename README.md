@@ -5,8 +5,6 @@ Repositório criado para o desenvolvimento do projeto do Jogo Pokémon.
 
 Obs: O arquivo pokedex.csv necessita estar incluso na pasta "output", que é gerada logo após o arquivo CodigoBase.c ser rodado pela primeira vez.
 
-Obs2: O código só está rodando no sistema operacional Linux.
-
 2 - Logo após, serão exibidas 3 opções ao usuário:
 
     Novo jogo: pede ao usuário que insira seu nickname e cria um novo jogo.
