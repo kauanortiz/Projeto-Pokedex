@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Bibliotecas\bib.h"
+#include "../include/bib.h"
 
 /*Deverá permitir cadastrar
 (inserir/listar/pesquisar/alterar/excluir) os Pokémons disponíveis para serem capturados.
